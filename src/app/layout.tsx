@@ -1,5 +1,11 @@
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
+
 import type { Metadata } from 'next'
 import './globals.css'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 
 export const metadata: Metadata = {
   title: 'Chronos',
@@ -13,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   )
 }
