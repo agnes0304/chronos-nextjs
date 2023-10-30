@@ -1,4 +1,4 @@
-import Browse from "../../components/search/Browse"
+import Browse from "../components/search/Browse"
 
 export default function Home() {
   return (
