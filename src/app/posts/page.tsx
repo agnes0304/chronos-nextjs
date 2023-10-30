@@ -1,50 +1,41 @@
-// import axios from "axios";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  filename: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
-// interface Post {
-//   id: number;
-//   title: string;
-//   body: string;
-//   filename: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
+async function getAll() {
+  const res = await fetch(`${baseUrl}/posts`);
+  console.log(res);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
 
-// interface PostProps {
-//   posts: Post[];
-// }
-
-// export async function getServerSideProps() {
-//   const res = await axios.get(`${baseUrl}/posts`);
-//   console.log(res);
-//   const posts = res.data;
-//   console.log(posts);
-//   return {
-//     props: {
-//       posts,
-//     },
-//   };
-// }
-
-// const Posts: React.FC<PostProps> = ({ posts }) => {
-//   return (
-//     <div>
-//       <h1>PostList</h1>
-//       {posts.map((post) => (
-//         <div key={post.id}>{/* Render each post */}</div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default Posts;
+  return res.json();
+}
 
 const Posts = () => {
+  let data: Post[] = [];
+
+  (async () => {
+    try {
+      data = await getAll();
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  })();
+
   return (
     <div>
-      <h1>PostList</h1>
-      
+      <h1>Post List</h1>
+      {data.map((post) => (
+        <div key={post.id}>{/* Render each post */}</div>
+      ))}
     </div>
   );
 };
