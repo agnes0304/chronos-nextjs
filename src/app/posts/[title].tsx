@@ -1,13 +1,37 @@
-import { useRouter } from 'next/router'
+import axios from "axios";
 
-export default function Post() {
-  const router = useRouter()
-  const { title } = router.query
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  filename: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface PostProps {
+  post: Post;
+}
+
+export async function getServerSideProps(context: any) {
+  const { title } = context.params;
+  const res = await axios.get(`${baseUrl}/posts/${title}`);
+  const post = res.data;
+
+  return {
+    props: {
+      post,
+    },
+  };
+}
+
+const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <div>
-      <h1>{title}</h1>
-      {/* Your post content here */}
+      <h1>{post.title}</h1>
     </div>
-  )
-}
+  );
+};
+export default Post;
