@@ -31,6 +31,10 @@ const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <div>
       <h1>{post.title}</h1>
+        <p>{post.body}</p>
+        <p>{post.createdAt}</p>
+        <p>{post.updatedAt}</p>
+        <p>{post.filename}</p>
     </div>
   );
 };
