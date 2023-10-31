@@ -3,6 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import Browse from "@/components/search/Browse";
+import Link from "next/link";
 
 type Post = {
   id: number;
@@ -41,7 +42,7 @@ const Posts = async () => {
       </div>
       {data.map((post) => (
         <div key={post.id}>
-          <h2>{post.title}</h2>
+          <Link href={`/posts/${post.id}`}>{post.title}</Link>
           <p>{post.body}</p>
           <p>{post.filename}</p>
         </div>

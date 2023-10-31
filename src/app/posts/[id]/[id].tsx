@@ -11,9 +11,10 @@ type Post = {
   createdAt: string;
 };
 
-async function getPost(params: any) {
+async function getPost(param: string) {
+  const paramId = Number(param);
   try {
-    const res = await axios.get(`${baseUrl}/posts/${params}`);
+    const res = await axios.get(`${baseUrl}/posts/${paramId}`);
     return res.data;
   } catch (error) {
     throw new Error("Failed to fetch data");
@@ -23,11 +24,16 @@ async function getPost(params: any) {
 const Post = async () => {
   const router = useRouter();
   const { param } = router.query;
+  console.log(param);
 
   let data: Post[] = [];
 
   try {
-    data = await getPost(param);
+    if (typeof param==="string") {
+      data = await getPost(param);
+    } else {
+      throw new Error("Failed to fetch data");
+    }
   } catch (error) {
     console.error("An error occurred:", error);
   }
