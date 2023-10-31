@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useRouter } from "next/router";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -21,31 +20,33 @@ async function getPost(param: string) {
   }
 }
 
-const Post = async () => {
-  const router = useRouter();
-  const { param } = router.query;
-  console.log(param);
-
-  let data: Post[] = [];
+const Post = async ({ params }: { params: { id: string } }) => {
+  let data: Post = {
+    id: 0,
+    title: "",
+    body: "",
+    filename: "",
+    createdAt: "",
+  };
 
   try {
-    if (typeof param==="string") {
-      data = await getPost(param);
+    if (typeof params.id === "string") {
+      data = await getPost(params.id);
     } else {
       throw new Error("Failed to fetch data");
     }
   } catch (error) {
     console.error("An error occurred:", error);
   }
+
   return (
     <div>
-      {data.map((post) => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.body}</p>
-          <p>{post.filename}</p>
-        </div>
-      ))}
+      <div>
+        <h2>{data.title}</h2>
+        <p>{data.body}</p>
+        <p>{data.filename}</p>
+        <p>{data.createdAt}</p>
+      </div>
     </div>
   );
 };
