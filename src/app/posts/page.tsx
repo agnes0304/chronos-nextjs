@@ -6,17 +6,18 @@ interface Post {
   body: string;
   filename: string;
   createdAt: string;
-  updatedAt: string;
 }
 
 async function getAll() {
   const res = await fetch(`${baseUrl}/posts`);
-  console.log(res);
+  const data = await res.json();
+
+  // console.log(data);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
 
-  return res.json();
+  return data;
 }
 
 const Posts = () => {
@@ -34,7 +35,7 @@ const Posts = () => {
     <div>
       <h1>Post List</h1>
       {data.map((post) => (
-        <div key={post.id}>{/* Render each post */}</div>
+        <div key={post.id}>post[0]</div>
       ))}
     </div>
   );
