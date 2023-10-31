@@ -1,8 +1,8 @@
 import axios from "axios";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import summary from "../../../../public/summary.webp";
-import Actions from "@/components/post/Actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -44,24 +44,21 @@ const Post = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <>
-      <div className="flex w-full h-[120px] border rounded border-gray-300 p-1 px-2">
-        <div className="relative w-auto h-full group shrink-0">
-          <img
-            className="w-full h-full overflow-hidden object-cover hover:opacity-30 transition-opacity duration-300"
-            src={summary}
-          />
-          <div className="absolute text-2xl text-gray-400 pointer-events-none opacity-0 top-[35%] left-[42%] group-hover:opacity-100 transition-opacity duration-300">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </div>
-        </div>
-        <div className="flex flex-col justify-between gap-1 ml-2 mb-1">
-          <h1 className="text-lg text-gray-400">{data.title}</h1>
-          <p className="text-sm text-gray-400 overflow-auto">{data.body}</p>
-          <Actions />
-        </div>
+    <article className="w-[90vw]">
+      <div>
+        <h1 className="text-lg text-gray-400">{data.title}</h1>
+        <p className="text-sm text-gray-300">{data.createdAt}</p>
       </div>
-    </>
+      <div
+        className="w-full overflow-hidden object-cover
+              hover:opacity-30 transition-opacity duration-300"
+      >
+        <Image src={summary} alt="sample image" />
+      </div>
+      <div>
+        <p className="text-gray-500">{data.body}</p>
+      </div>
+    </article>
   );
 };
 
