@@ -9,14 +9,11 @@ interface Props {
 
 const Tags: FC<Props> = ({ tags, setClicked, clickedTags }) => {
   const onSelect = (tag: string) => {
-    // console.log(tag);
     if (clickedTags.includes(tag)) {
       const filtered = clickedTags.filter((item) => item !== tag);
       setClicked(filtered);
-      // console.log(filtered);
     } else {
       setClicked([...clickedTags, tag]);
-      // console.log([...clickedTags, tag]);
     }
   };
   return (
