@@ -3,5 +3,5 @@ export default function PostLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="mt-[120px] md:w-8/12">{children}</main>;
+  return <main className="mt-[120px]">{children}</main>;
 }
