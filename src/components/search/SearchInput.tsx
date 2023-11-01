@@ -107,7 +107,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
             onCompositionStart={handleComposition}
             onCompositionEnd={handleComposition}
           />
-          <ul className="absolute top-[33px] right-2 w-[98%]">
+          <ul className="absolute top-[34px] right-2 w-[98%] h-[300px] overflow-scroll overflow-x-hidden overflow-y-hidden hover:overflow-y-auto">
             {filteredSuggestions.map((item, index) => (
               <li
                 className="text-indigo-400 text-sm bg-white bg-opacity-90 align-baseline p-1 text-end hover:bg-indigo-100/90 hover:text-indigo-600"

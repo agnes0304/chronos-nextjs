@@ -30,6 +30,29 @@ ol {
   list-style: none;
 }
 
+ul.absolute {
+  scrollbar-width: none;  /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+/* Custom styling for all scrollbars */
+ul.absolute::-webkit-scrollbar {
+  width: 6px;  /* Width of the vertical scrollbar */
+}
+
+ul.absolute::-webkit-scrollbar-track {
+  background-color: rgb(251, 251, 251); 
+}
+
+ul.absolute::-webkit-scrollbar-thumb {
+  background-color: rgb(162, 134, 255);
+  border-radius: 4px;
+}
+
+ul.absolute::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(162, 134, 255);
+}
+
 input,
 select,
 textarea {
