@@ -11,6 +11,7 @@ type Post = {
   title: string;
   body: string;
   filename: string;
+  filename_ex: string;
   bloglink: string;
   createdAt: string;
 };
@@ -31,6 +32,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
     title: "",
     body: "",
     filename: "",
+    filename_ex: "",
     bloglink: "",
     createdAt: "",
   };
@@ -61,7 +63,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
         <p className="text-gray-500">{data.body}</p>
       </div>
       {/* blogLink도 보내야 돼 */}
-      <Actions fileName={data.filename} blogLink={data.bloglink} />
+      <Actions fileName={data.filename_ex} blogLink={data.bloglink} />
     </article>
   );
 };
