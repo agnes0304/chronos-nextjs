@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
