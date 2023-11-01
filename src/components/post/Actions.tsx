@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { useState, useEffect, use } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -9,19 +10,36 @@ type ActionsProps = {
 };
 
 const Actions = ({ fileName }: ActionsProps) => {
+  const [fileUrl, setFileUrl] = useState("");
+
+  useEffect(() => {
+    const getFileUrl = async () => {
+      try {
+        // const res = await axios.get(`${baseUrl}/download/${fileName}`);
+        const res = await axios.get(`${baseUrl}/download/test.jpg`);
+        setFileUrl(res.data.url);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getFileUrl();
+  }
+  , []);
 
   const downloadHandler = async () => {
     try {
-      // 📌 s3에 file name 설정 완료 되면
-      // const res = await axios.get(`${baseUrl}/download/${fileName}`);
+      const res = await fetch(fileUrl);
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = '';
 
-      // 📌 hard coding
-      const res = await axios.get(`${baseUrl}/download/test.jpg`);
-      // 와...확장자 필요없다고 했으면서 이게 필요하네...?
-      const s3url = res.data.url;
-      console.log(s3url); // fetching url ok
+      document.body.appendChild(a);
+      a.click();
 
-      window.open(s3url, '_blank');
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.log(error);
     }
