@@ -32,7 +32,7 @@ const Posts = async () => {
   }
 
   return (
-    <div className="flex h-[100vh] w-[90vw] pt-[52px] flex-col items-start">
+    <div className="flex h-[100vh] w-[90vw] flex-col items-start">
       <Browse />
       <div className="flex justify-center items-baseline">
         <div className="text-gray-400 mr-1">

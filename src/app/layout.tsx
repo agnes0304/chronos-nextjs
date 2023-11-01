@@ -21,7 +21,7 @@ export default function RootLayout({
     <html>
       <body>
         <Header />
-        {children}
+        <main className="mt-[120px]">{children}</main>
         <Footer />
       </body>
     </html>

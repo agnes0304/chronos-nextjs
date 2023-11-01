@@ -1,8 +1,8 @@
 import axios from "axios";
 import Image from "next/image";
 import summary from "../../../../public/summary.webp";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Fdate from "@/components/Fdate";
+import Actions from "@/components/post/Actions";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -36,6 +36,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
   try {
     if (typeof params.id === "string") {
       data = await getPost(params.id);
+      console.log(data);
     } else {
       throw new Error("Failed to fetch data");
     }
@@ -44,10 +45,10 @@ const Post = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <article className="w-[90vw]">
+    <article className="w-[90vw] h-[100vh] flex flex-col justify-start gap-2">
       <div>
         <h1 className="text-lg text-gray-400">{data.title}</h1>
-        <p className="text-sm text-gray-300">{data.createdAt}</p>
+        <div className="text-xs font-light text-gray-400 text-right"><Fdate dateStr={data.createdAt} /></div>
       </div>
       <div
         className="w-full overflow-hidden object-cover
@@ -58,6 +59,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
       <div>
         <p className="text-gray-500">{data.body}</p>
       </div>
+      <Actions />
     </article>
   );
 };
