@@ -2,8 +2,8 @@ import Browse from "../components/search/Browse"
 
 export default function Home() {
   return (
-    <main>
+    <div>
       <Browse />
-    </main>
+    </div>
   )
 }
