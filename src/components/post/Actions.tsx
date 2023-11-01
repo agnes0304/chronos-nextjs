@@ -9,7 +9,7 @@ type ActionsProps = {
 };
 
 const Actions = ({ fileName }: ActionsProps) => {
-  // downloadHandler: onClick on download button, fetch url from api: '/download/<string:file_name>'
+  
   const downloadHandler = async () => {
     try {
       // 📌 s3에 file name 설정 완료 되면
