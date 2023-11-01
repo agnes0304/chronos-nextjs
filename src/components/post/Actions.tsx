@@ -9,21 +9,19 @@ type ActionsProps = {
 };
 
 const Actions = ({ fileName }: ActionsProps) => {
-  
+
   const downloadHandler = async () => {
     try {
       // 📌 s3에 file name 설정 완료 되면
       // const res = await axios.get(`${baseUrl}/download/${fileName}`);
-      // console.log(fileName)
 
       // 📌 hard coding
-      const res = await axios.get(`${baseUrl}/download/ver1.5_일제강점기_요약_본고딕.`);
+      const res = await axios.get(`${baseUrl}/download/test.jpg`);
+      // 와...확장자 필요없다고 했으면서 이게 필요하네...?
       const s3url = res.data.url;
       console.log(s3url); // fetching url ok
 
-      // ERROR: NoSuchKey
-
-      // window.open(s3url, '_blank');
+      window.open(s3url, '_blank');
     } catch (error) {
       console.log(error);
     }
