@@ -17,9 +17,11 @@ const Actions = ({ fileName }: ActionsProps) => {
       // console.log(fileName)
 
       // 📌 hard coding
-      const res = await axios.get(`${baseUrl}/download/ver1.5_일제강점기_요약_본고딕`);
+      const res = await axios.get(`${baseUrl}/download/ver1.5_일제강점기_요약_본고딕.`);
       const s3url = res.data.url;
-      console.log(s3url);
+      console.log(s3url); // fetching url ok
+
+      // ERROR! NoSuchKey: The specified key does not exist.
 
       // window.open(s3url, '_blank');
     } catch (error) {
