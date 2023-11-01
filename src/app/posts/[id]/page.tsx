@@ -45,7 +45,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <article className="w-[90vw] h-[100vh] flex flex-col justify-start gap-2 lg:w-[70%] lg:mx-auto">
+    <article className="w-[90vw] h-[100vh] flex flex-col justify-start gap-2 pb-[100px] lg:w-[70%] lg:mx-auto">
       <div>
         <h1 className="text-lg text-gray-400">{data.title}</h1>
         <div className="text-xs font-light text-gray-400 text-right"><Fdate dateStr={data.createdAt} /></div>
@@ -58,7 +58,8 @@ const Post = async ({ params }: { params: { id: string } }) => {
       <div>
         <p className="text-gray-500">{data.body}</p>
       </div>
-      <Actions />
+      {/* blogLink도 보내야 돼 */}
+      <Actions fileName={data.filename} />
     </article>
   );
 };
