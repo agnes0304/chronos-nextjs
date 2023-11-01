@@ -3,7 +3,8 @@ import { FC, useState, useEffect, KeyboardEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { autocompleteData } from "../../data/dummy";
+import axios from "axios";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface Props {
   selectedTags: string[];
@@ -17,23 +18,20 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
   const [words, setWords] = useState<string[]>([]);
   const [isComposing, setIsComposing] = useState(false);
 
-  // 🌐 fetching data (검색엔진 키워드 전부)
-  // -> 이렇게 하면 query 바뀔때마다 api 호출하게 되는데 이건 비효율적아닌가
-  // + react-query 사용 예정
-  //
-  // useEffect(() => {
-  //   if (query) {
-  //     axios.get(`/api/suggestions?query=${query}`)
-  //       .then(response => {
-  //         setSuggestions(response.data);
-  //       });
-  //   }
-  // }, [query]);
-
+  // 🌐 fetching data from server - endpoint: '/words'
   useEffect(() => {
-    setSuggestions(autocompleteData);
-    setWords(selectedTags);
-  }, [autocompleteData, selectedTags]);
+    axios
+      .get(`${baseUrl}/words`)
+      .then((res) => {
+        setSuggestions(res.data);
+        console.log(res.data);
+      })
+      .then(() => {
+        setWords(selectedTags);
+      });
+  }, [selectedTags]);
+  // DONE: 조선까지 쳐야 조선이 뜸. 이전에는 조만 쳐도 조세제도, 조선 다 떴는데 -> 해결
+  // TODO: 클릭하면 input에 값이 들어가게 하기
 
   // TODO: optimize with trie DS
   useEffect(() => {
