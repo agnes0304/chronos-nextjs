@@ -30,7 +30,6 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
   //   }
   // }, [query]);
 
-
   useEffect(() => {
     setSuggestions(autocompleteData);
     setWords(selectedTags);
