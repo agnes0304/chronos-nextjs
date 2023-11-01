@@ -10,6 +10,7 @@ type Post = {
   title: string;
   body: string;
   filename: string;
+  bloglink: string;
   createdAt: string;
 };
 

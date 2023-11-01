@@ -7,24 +7,24 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 type ActionsProps = {
   fileName: string;
+  blogLink: string;
 };
 
-const Actions = ({ fileName }: ActionsProps) => {
+const Actions = ({ fileName, blogLink }: ActionsProps) => {
   const [fileUrl, setFileUrl] = useState("");
 
   useEffect(() => {
     const getFileUrl = async () => {
       try {
-        // const res = await axios.get(`${baseUrl}/download/${fileName}`);
-        const res = await axios.get(`${baseUrl}/download/test.jpg`);
+        const res = await axios.get(`${baseUrl}/download/${fileName}`);
+        // const res = await axios.get(`${baseUrl}/download/test.jpg`);
         setFileUrl(res.data.url);
       } catch (error) {
         console.log(error);
       }
     };
     getFileUrl();
-  }
-  , []);
+  }, []);
 
   const downloadHandler = async () => {
     try {
@@ -33,7 +33,7 @@ const Actions = ({ fileName }: ActionsProps) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = '';
+      a.download = "";
 
       document.body.appendChild(a);
       a.click();
@@ -59,7 +59,7 @@ const Actions = ({ fileName }: ActionsProps) => {
         type="button"
         className="h-[30px] border border-gray-400 rounded-full text-sm text-gray-400 flex justify-center items-center group p-1 px-2 hover:border-indigo-300 hover:bg-indigo-300 hover:text-white active:bg-indigo-400 active:shadow-inner transition-all duration-200 ease-in-out"
       >
-        <span className="mr-1">자세히 보기</span>
+        <a href={blogLink} target="_blank" className="mr-1">자세히 보기</a>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
