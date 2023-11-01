@@ -21,7 +21,7 @@ const Actions = ({ fileName }: ActionsProps) => {
       const s3url = res.data.url;
       console.log(s3url); // fetching url ok
 
-      // ERROR! NoSuchKey: The specified key does not exist.
+      // ERROR: NoSuchKey
 
       // window.open(s3url, '_blank');
     } catch (error) {
