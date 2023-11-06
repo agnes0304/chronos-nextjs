@@ -18,7 +18,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
   const [words, setWords] = useState<string[]>([]);
   const [isComposing, setIsComposing] = useState(false);
 
-  // 🌐 fetching data from server - endpoint: '/words'
+  // 🌐 fetching data from server
   useEffect(() => {
     axios
       .get(`${baseUrl}/words`)
@@ -30,7 +30,6 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
         setWords(selectedTags);
       });
   }, [selectedTags]);
-  // DONE: 조선까지 쳐야 조선이 뜸. 이전에는 조만 쳐도 조세제도, 조선 다 떴는데 -> 해결
   // TODO: 클릭하면 input에 값이 들어가게 하기
 
   // TODO: optimize with trie DS
@@ -44,6 +43,15 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
       setFilteredSuggestions([]);
     }
   }, [query, suggestions]);
+
+  const clickHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const clickedWord = e.currentTarget.textContent;
+    if (clickedWord) {
+      setWords([...words, clickedWord]);
+      setQuery("");
+      setClicked([...words, clickedWord]);
+    }
+  }
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !isComposing) {
@@ -112,6 +120,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
               <li
                 className="text-indigo-400 text-sm bg-white bg-opacity-90 align-baseline p-1 text-end hover:bg-indigo-100/90 hover:text-indigo-600"
                 key={index}
+                onClick={clickHandler}
               >
                 {item}
               </li>
