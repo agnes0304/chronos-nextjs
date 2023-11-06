@@ -15,47 +15,56 @@ type Post = {
   createdAt: string;
 };
 
-async function getAll(query?: { [key: string]: string | string[] }) {
+// sample: {'search': '조선어학회'} 가 query로 들어옴
+async function getAll(query?: {
+  [key: string]: string | string[] | undefined;
+}) {
   try {
-    if(query){
-      const params = new URLSearchParams();
-      for (const key in query) {
-        const value = query[key];
-        if (Array.isArray(value)) {
-          value.forEach(item => params.append(key, item));
-        } else {
-          params.append(key, value);
-        }
-      }
-      const res = await axios.get(`${baseUrl}/posts`, {
-        params: params
-      });
-      return res.data;
-    } else {
-      const res = await axios.get(`${baseUrl}/posts`);
-      return res.data;
-    }
+    const generateQueryString = (params: {
+      [key: string]: string | string[] | undefined;
+    }) => {
+      return Object.entries(params)
+        .filter(([, value]) => value !== undefined) // filter out undefined values
+        .map(([key, value]) => {
+          if (Array.isArray(value)) {
+            return value
+              .map(
+                (item) =>
+                  `${encodeURIComponent(key)}=${encodeURIComponent(item)}`
+                  // `${key}=${item}`
+              )
+              .join("&");
+          }
+          return `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`;
+          // return `${key}=${value as string}`;
+        })
+        .join("&");
+    };
+    const queryString = query ? generateQueryString(query) : "";
+    console.log(queryString); // print success -> search=조선어학회
+
+    // console.log(`${baseUrl}/posts${queryString ? `?${queryString}` : ""}`); // print success -> http://localhost:3000/api/posts?search=조선어학회
+    const res = await axios.get(
+      `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
+    );
+    console.log(res.data); // print fail -> 서버 에러?
+    return res.data;
   } catch (error) {
-    throw new Error("Failed to fetch data");
+    throw new Error("getAll 에러! Failed to fetch data");
   }
 }
-
 
 const Posts = async ({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] }
+  searchParams: { [key: string]: string | string[] | undefined };
 }) => {
+  console.log(searchParams); // print success
   let data: Post[] = [];
-  
   try {
-    if (searchParams){
-      data = await getAll(searchParams);
-    } else {
-      data = await getAll();
-    }   
+    data = await getAll(searchParams);
   } catch (error) {
-    console.error("An error occurred:", error);
+    console.error("Posts내부여! error occurred:", error);
   }
 
   return (
@@ -68,17 +77,20 @@ const Posts = async ({
         <h1 className="text-gray-400 my-2">PostList</h1>
       </div>
       <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {data.map((post) => (
-        <div
-          key={post.id}
-          className="flex flex-col max-h-32 w-full justify-between border rounded border-gray-300 p-2"
-        >
-          <Link href={`/posts/${post.id}`} className="text-lg text-gray-400 hover:text-gray-700">
-            {post.title}
-          </Link>
-          <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
-        </div>
-      ))}
+        {data.map((post) => (
+          <div
+            key={post.id}
+            className="flex flex-col max-h-32 w-full justify-between border rounded border-gray-300 p-2"
+          >
+            <Link
+              href={`/posts/${post.id}`}
+              className="text-lg text-gray-400 hover:text-gray-700"
+            >
+              {post.title}
+            </Link>
+            <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

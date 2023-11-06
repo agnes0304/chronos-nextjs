@@ -5,7 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 
 interface Props {
   selectedTags: string[];
@@ -84,11 +84,12 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
     }
   };
 
-  // onClick to route "/posts?search=word1+word2+word3" and get data from server
+  // onClick to route "/posts?search=word1+word2+word3"
   const handleSubmit = () => {
-    const queryString = words.map(encodeURIComponent).join("+");
-    router.push(`/posts?search=${queryString}`);
+    const queryString = words.map(word => `search=${encodeURIComponent(word)}`).join("&");
+    router.push(`/posts?${queryString}`);
   };
+
 
   return (
     <div className="flex justify-center items-center">
