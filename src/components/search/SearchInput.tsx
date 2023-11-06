@@ -26,7 +26,6 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
       .get(`${baseUrl}/words`)
       .then((res) => {
         setSuggestions(res.data);
-        console.log(res.data);
       })
       .then(() => {
         setWords(selectedTags);

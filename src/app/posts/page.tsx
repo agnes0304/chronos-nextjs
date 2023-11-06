@@ -30,20 +30,18 @@ async function getAll(query?: {
             return value
               .map(
                 (item) =>
-                  `${encodeURIComponent(key)}=${encodeURIComponent(item)}`
-                  // `${key}=${item}`
+                  // `${encodeURIComponent(key)}=${encodeURIComponent(item)}`
+                  `${key}=${item}`
               )
               .join("&");
           }
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`;
-          // return `${key}=${value as string}`;
+          // return `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`;
+          return `${key}=${value as string}`;
         })
         .join("&");
     };
     const queryString = query ? generateQueryString(query) : "";
     console.log(queryString); // print success -> search=조선어학회
-
-    // console.log(`${baseUrl}/posts${queryString ? `?${queryString}` : ""}`); // print success -> http://localhost:3000/api/posts?search=조선어학회
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
     );
@@ -59,7 +57,7 @@ const Posts = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  console.log(searchParams); // print success
+  // console.log(searchParams); // print success
   let data: Post[] = [];
   try {
     data = await getAll(searchParams);
