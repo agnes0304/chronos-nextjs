@@ -5,6 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { useRouter } from "next/router";
 
 interface Props {
   selectedTags: string[];
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
@@ -30,7 +32,6 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
         setWords(selectedTags);
       });
   }, [selectedTags]);
-  // TODO: 클릭하면 input에 값이 들어가게 하기
 
   // TODO: optimize with trie DS
   useEffect(() => {
@@ -83,6 +84,12 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
     }
   };
 
+  // onClick to route "/posts?search=word1+word2+word3" and get data from server
+  const handleSubmit = () => {
+    const queryString = words.map(encodeURIComponent).join("+");
+    router.push(`/posts?search=${queryString}`);
+  };
+
   return (
     <div className="flex justify-center items-center">
       <div className="flex relative w-[90vw] h-[39px] border-solid border-[1px] border-gray-300 rounded-[20px] p-1 px-[4px]">
@@ -131,6 +138,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
           <button
             type="button"
             className="text-gray-300 text-sm absolute rounded-full right-3 top-2 bg-white bg-opacity-50"
+            onClick={handleSubmit}
           >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>

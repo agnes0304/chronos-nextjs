@@ -15,20 +15,45 @@ type Post = {
   createdAt: string;
 };
 
-async function getAll() {
+async function getAll(query?: { [key: string]: string | string[] }) {
   try {
-    const res = await axios.get(`${baseUrl}/posts`);
-    return res.data;
+    if(query){
+      const params = new URLSearchParams();
+      for (const key in query) {
+        const value = query[key];
+        if (Array.isArray(value)) {
+          value.forEach(item => params.append(key, item));
+        } else {
+          params.append(key, value);
+        }
+      }
+      const res = await axios.get(`${baseUrl}/posts`, {
+        params: params
+      });
+      return res.data;
+    } else {
+      const res = await axios.get(`${baseUrl}/posts`);
+      return res.data;
+    }
   } catch (error) {
     throw new Error("Failed to fetch data");
   }
 }
 
-const Posts = async () => {
-  let data: Post[] = [];
 
+const Posts = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] }
+}) => {
+  let data: Post[] = [];
+  
   try {
-    data = await getAll();
+    if (searchParams){
+      data = await getAll(searchParams);
+    } else {
+      data = await getAll();
+    }   
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -52,14 +77,6 @@ const Posts = async () => {
             {post.title}
           </Link>
           <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
-          {/* <p className="text-sm text-gray-400 overflow-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-            fringilla orci sed arcu lacinia egestas. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Vivamus fringilla orci sed arcu lacinia
-            egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Vivamus fringilla orci sed arcu lacinia egestas.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-          fringilla orci sed arcu lacinia egestas
-          </p> */}
         </div>
       ))}
       </div>
