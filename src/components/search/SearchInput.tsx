@@ -94,7 +94,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
   };
 
   return (
-    <div className="flex justify-center items-center z-[-1]">
+    <div className="flex justify-center items-center">
       <div className="flex relative w-[90vw] h-[39px] border-solid border-[1px] border-gray-300 rounded-[20px] p-1 px-[4px]">
         <div className="flex gap-[3px] flex-shrink-0">
           {words.map((word, index) => (
