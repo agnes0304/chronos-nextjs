@@ -24,18 +24,16 @@ async function getAll(query?: {
       [key: string]: string | string[] | undefined;
     }) => {
       return Object.entries(params)
-        .filter(([, value]) => value !== undefined) // filter out undefined values
+        .filter(([, value]) => value !== undefined) 
         .map(([key, value]) => {
           if (Array.isArray(value)) {
             return value
               .map(
                 (item) =>
-                  // `${encodeURIComponent(key)}=${encodeURIComponent(item)}`
                   `${key}=${item}`
               )
               .join("&");
           }
-          // return `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`;
           return `${key}=${value as string}`;
         })
         .join("&");
