@@ -41,11 +41,11 @@ async function getAll(query?: {
         .join("&");
     };
     const queryString = query ? generateQueryString(query) : "";
-    console.log(queryString); // print success -> search=조선어학회
+    console.log(queryString);
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
     );
-    console.log(res.data); // print fail -> 서버 에러?
+    console.log(res.data);
     return res.data;
   } catch (error) {
     throw new Error("getAll 에러! Failed to fetch data");
@@ -57,12 +57,11 @@ const Posts = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  // console.log(searchParams); // print success
   let data: Post[] = [];
   try {
     data = await getAll(searchParams);
   } catch (error) {
-    console.error("Posts내부여! error occurred:", error);
+    console.error("Posts 내부! error occurred:", error);
   }
 
   return (
@@ -76,18 +75,16 @@ const Posts = async ({
       </div>
       <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {data.map((post) => (
-          <div
+          <Link
+            href={`/posts/${post.id}`}
             key={post.id}
             className="flex flex-col max-h-32 w-full justify-between border rounded border-gray-300 p-2"
           >
-            <Link
-              href={`/posts/${post.id}`}
-              className="text-lg text-gray-400 hover:text-gray-700"
-            >
+            <h2 className="text-lg text-gray-400 hover:text-gray-700">
               {post.title}
-            </Link>
+            </h2>
             <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

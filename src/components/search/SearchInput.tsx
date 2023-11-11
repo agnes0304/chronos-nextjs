@@ -5,7 +5,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 interface Props {
   selectedTags: string[];
@@ -51,13 +51,15 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
       setQuery("");
       setClicked([...words, clickedWord]);
     }
-  }
+  };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !isComposing) {
+    if (e.key === "Enter" && query.trim() !== "" && !isComposing) {
       setWords([...words, query]);
       setQuery("");
       setClicked([...words, query]);
+    } else if (e.key === "Enter" && query.trim() === "" && !isComposing) {
+      handleSubmit();
     }
   };
 
@@ -85,10 +87,11 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
 
   // onClick to route "/posts?search=word1+word2+word3"
   const handleSubmit = () => {
-    const queryString = words.map(word => `search=${encodeURIComponent(word)}`).join("&");
+    const queryString = words
+      .map((word) => `search=${encodeURIComponent(word)}`)
+      .join("&");
     router.push(`/posts?${queryString}`);
   };
-
 
   return (
     <div className="flex justify-center items-center">
@@ -122,17 +125,19 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
             onCompositionStart={handleComposition}
             onCompositionEnd={handleComposition}
           />
-          <ul className="absolute top-[34px] right-2 w-[98%] h-[300px] overflow-scroll overflow-x-hidden overflow-y-hidden hover:overflow-y-auto">
-            {filteredSuggestions.map((item, index) => (
-              <li
-                className="text-indigo-400 text-sm bg-white bg-opacity-90 align-baseline p-1 text-end hover:bg-indigo-100/90 hover:text-indigo-600"
-                key={index}
-                onClick={clickHandler}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
+          {filteredSuggestions.length > 0 && (
+            <ul className="absolute top-[34px] right-2 w-[98%] h-[300px] overflow-scroll overflow-x-hidden overflow-y-hidden hover:overflow-y-auto">
+              {filteredSuggestions.map((item, index) => (
+                <li
+                  className="text-indigo-400 text-sm bg-white bg-opacity-90 align-baseline p-1 text-end hover:bg-indigo-100/90 hover:text-indigo-600"
+                  key={index}
+                  onClick={clickHandler}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div>
           <button
