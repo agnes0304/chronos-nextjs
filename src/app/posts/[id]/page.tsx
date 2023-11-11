@@ -1,6 +1,5 @@
 import axios from "axios";
 import Image from "next/image";
-import summary from "../../../../public/summary.webp";
 import Fdate from "@/components/Fdate";
 import Actions from "@/components/post/Actions";
 
@@ -57,7 +56,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
       <div
         className="flex justify-center items-center w-full overflow-hidden object-cover"
       >
-        <Image src={summary} alt="sample image" />
+        <Image src={`/${data.filename}.webp`} layout="responsive" width={100} height={100} objectFit="cover" objectPosition="center" alt={`${data.filename} image`} />
       </div>
       <div>
         <p className="text-gray-500">{data.body}</p>
