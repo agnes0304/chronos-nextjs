@@ -41,7 +41,6 @@ async function getAll(query?: {
         .join("&");
     };
     const queryString = query ? generateQueryString(query) : "";
-    console.log(queryString);
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
     );
