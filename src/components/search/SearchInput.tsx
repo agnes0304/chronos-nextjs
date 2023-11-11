@@ -32,7 +32,6 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
       });
   }, [selectedTags]);
 
-  // TODO: optimize with trie DS
   useEffect(() => {
     if (query) {
       const filtered = suggestions.filter((item) => {
@@ -85,7 +84,6 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
     }
   };
 
-  // onClick to route "/posts?search=word1+word2+word3"
   const handleSubmit = () => {
     const queryString = words
       .map((word) => `search=${encodeURIComponent(word)}`)

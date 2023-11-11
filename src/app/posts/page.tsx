@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import Browse from "@/components/search/Browse";
 import Link from "next/link";
+import NoPost from "@/components/post/NoPost";
 
 type Post = {
   id: number;
@@ -70,7 +71,7 @@ const Posts = async ({
         </div>
         <h1 className="text-gray-400 my-2">PostList</h1>
       </div>
-      <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
+      {data.length === 0 ? <NoPost /> : (<div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
         {data.map((post) => (
           <Link
             href={`/posts/${post.id}`}
@@ -83,7 +84,8 @@ const Posts = async ({
             <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
           </Link>
         ))}
-      </div>
+      </div>)}
+      
     </div>
   );
 };
