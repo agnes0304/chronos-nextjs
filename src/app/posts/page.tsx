@@ -70,7 +70,7 @@ const Posts = async ({
         </div>
         <h1 className="text-gray-400 my-2">PostList</h1>
       </div>
-      <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
         {data.map((post) => (
           <Link
             href={`/posts/${post.id}`}

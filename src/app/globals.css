@@ -6,14 +6,37 @@
   box-sizing: border-box;
 }
 
+html, body {
+  /* height: 100%;  */
+}
+
 body {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+main {
+  /* Footer 배치 */
+  flex: 1; 
+  overflow-y: auto;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+main::-webkit-scrollbar {
+  display: none; /* For WebKit browsers like Chrome and Safari */
+}
+
+main {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+}
+
+html, 
 body,
 h1,
 h2,
