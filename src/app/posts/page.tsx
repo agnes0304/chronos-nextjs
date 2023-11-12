@@ -25,21 +25,20 @@ async function getAll(query?: {
       [key: string]: string | string[] | undefined;
     }) => {
       return Object.entries(params)
-        .filter(([, value]) => value !== undefined) 
+        .filter(([, value]) => value !== undefined)
         .map(([key, value]) => {
           if (Array.isArray(value)) {
-            return value
-              .map(
-                (item) =>
-                  `${key}=${item}`
-              )
-              .join("&");
+            return value.map((item) => `${key}=${item}`).join("&");
           }
           return `${key}=${value as string}`;
         })
         .join("&");
     };
+
     const queryString = query ? generateQueryString(query) : "";
+
+    console.log(`HERE ${query}, ${queryString}`);
+
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
     );
@@ -77,21 +76,24 @@ const Posts = async ({
         </div>
         <h1 className="text-gray-400 my-2">PostList</h1>
       </div>
-      {data.length === 0 ? <NoPost /> : (<div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
-        {data.map((post) => (
-          <Link
-            href={`/posts/${post.id}`}
-            key={post.id}
-            className="flex flex-col max-h-32 w-full justify-between border rounded border-gray-300 p-2"
-          >
-            <h2 className="text-lg text-gray-400 hover:text-gray-700">
-              {post.title}
-            </h2>
-            <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
-          </Link>
-        ))}
-      </div>)}
-      
+      {data.length === 0 ? (
+        <NoPost />
+      ) : (
+        <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
+          {data.map((post) => (
+            <Link
+              href={`/posts/${post.id}`}
+              key={post.id}
+              className="flex flex-col max-h-32 w-full justify-between border rounded border-gray-300 p-2"
+            >
+              <h2 className="text-lg text-gray-400 hover:text-gray-700">
+                {post.title}
+              </h2>
+              <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
