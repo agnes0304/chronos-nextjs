@@ -43,7 +43,6 @@ async function getAll(query?: {
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
     );
-    console.log(res.data);
     return res.data;
   } catch (error) {
     throw new Error("getAll 에러! Failed to fetch data");
@@ -58,6 +57,13 @@ const Posts = async ({
   let data: Post[] = [];
   try {
     data = await getAll(searchParams);
+
+    // Removing duplicates
+    const uniqueData = new Map<number, Post>();
+    data.forEach((post) => {
+      uniqueData.set(post.id, post);
+    });
+    data = Array.from(uniqueData.values());
   } catch (error) {
     console.error("Posts 내부! error occurred:", error);
   }
