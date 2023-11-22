@@ -36,7 +36,8 @@ async function getAll(query?: {
 }) {
   try {
     const queryString = query ? generateQueryString(query) : "";
-    console.log(`HERE ${query}, ${queryString}`);
+    // console.log(`HERE ${query}, ${queryString}`);
+    alert(`HERE ${query}, ${queryString}`);
 
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
@@ -54,7 +55,8 @@ const Posts = async ({
 }) => {
   let data: Post[] = [];
   try {
-    console.log("Posts 내부 searchParams:", searchParams);
+    // console.log("Posts 내부 searchParams:", searchParams);
+    alert(`Posts 내부 searchParams: ${searchParams}`);
     data = await getAll(searchParams);
 
     // Removing duplicates
