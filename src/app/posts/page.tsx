@@ -16,27 +16,26 @@ type Post = {
   createdAt: string;
 };
 
+function generateQueryString(params: {
+  [key: string]: string | string[] | undefined;
+}) {
+  // key는 'search'이고 value는 '조선어','학회'인 객체가 들어오면 search=조선어+학회로 만들어줌
+  const queryString = Object.entries(params).map((key, value) => {
+    if (Array.isArray(value)) {
+      let words = value.map((v) => `${v}`).join("+");
+      return `${key}=${words}`;
+    }
+    return `${key}=${value}`;
+  });
+  return queryString;
+}
+
 // sample: {'search': '조선어학회'} 가 query로 들어옴
 async function getAll(query?: {
   [key: string]: string | string[] | undefined;
 }) {
   try {
-    const generateQueryString = (params: {
-      [key: string]: string | string[] | undefined;
-    }) => {
-      return Object.entries(params)
-        .filter(([, value]) => value !== undefined)
-        .map(([key, value]) => {
-          if (Array.isArray(value)) {
-            return value.map((item) => `${key}=${item}`).join("&");
-          }
-          return `${key}=${value as string}`;
-        })
-        .join("&");
-    };
-
     const queryString = query ? generateQueryString(query) : "";
-
     console.log(`HERE ${query}, ${queryString}`);
 
     const res = await axios.get(

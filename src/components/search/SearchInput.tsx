@@ -85,9 +85,16 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
   };
 
   const handleSubmit = () => {
-    const queryString = words
-      .map((word) => `search=${encodeURIComponent(word)}`)
-      .join("&");
+    // key 중복으로 인해 +로 구분
+    // const queryString = words
+    //   .map((word) => `search=${encodeURIComponent(word)}`)
+    //   .join("&");
+    // router.push(`/posts?${queryString}`);
+
+    const queryStringWords = words
+      .map((word) => `${encodeURIComponent(word)}`)
+      .join("+");
+    const queryString = `search=${queryStringWords}`;
     router.push(`/posts?${queryString}`);
   };
 

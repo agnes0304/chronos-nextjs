@@ -8,9 +8,10 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 type ActionsProps = {
   fileName: string;
   blogLink: string;
+  isPaid: boolean;
 };
 
-const Actions = ({ fileName, blogLink }: ActionsProps) => {
+const Actions = ({ fileName, blogLink, isPaid }: ActionsProps) => {
   const [fileUrl, setFileUrl] = useState("");
 
   useEffect(() => {
@@ -45,14 +46,18 @@ const Actions = ({ fileName, blogLink }: ActionsProps) => {
     }
   };
 
+  const paymentHandler = () => {
+    console.log("paymentHandler");
+  }
+
   return (
     <div className="flex justify-end gap-3">
       <button
         type="button"
-        onClick={downloadHandler}
+        onClick={isPaid ? downloadHandler : paymentHandler}
         className="h-[30px] border border-gray-400 rounded-full text-sm text-gray-400 flex justify-center items-center group p-1 px-2 hover:border-indigo-300 hover:bg-indigo-300 hover:text-white active:bg-indigo-400 active:shadow-inner transition-all duration-200 ease-in-out"
       >
-        <span className="mr-1">다운로드</span>
+        <span className="mr-1">{isPaid ? '다운로드':'구매하기'}</span>
         <FontAwesomeIcon icon={faDownload} />
       </button>
       <button
