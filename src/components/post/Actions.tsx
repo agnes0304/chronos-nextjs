@@ -48,6 +48,7 @@ const Actions = ({ fileName, blogLink, isPaid }: ActionsProps) => {
 
   const paymentHandler = () => {
     console.log("paymentHandler");
+    window.open("https://www.payapp.kr/L/z3eWSD");
   }
 
   return (
