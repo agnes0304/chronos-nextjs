@@ -20,13 +20,15 @@ function generateQueryString(params: {
   [key: string]: string | string[] | undefined;
 }) {
   // key는 'search'이고 value는 '조선어','학회'인 객체가 들어오면 search=조선어+학회로 만들어줌
-  const queryString = Object.entries(params).map((key, value) => {
-    if (Array.isArray(value)) {
-      let words = value.map((v) => `${v}`).join("+");
-      return `${key}=${words}`;
-    }
-    return `${key}=${value}`;
-  });
+  const queryString = Object.keys(params)
+    .map((key) => {
+      const value = params[key];
+      if (Array.isArray(value)) {
+        return `${key}=${value}.join("+")`;
+      }
+      return `${key}=${value}`;
+    })
+    .join("&");
   return queryString;
 }
 
@@ -36,8 +38,7 @@ async function getAll(query?: {
 }) {
   try {
     const queryString = query ? generateQueryString(query) : "";
-    // console.log(`HERE ${query}, ${queryString}`);
-    alert(`HERE ${query}, ${queryString}`);
+    console.log(`HERE, ${queryString}`);
 
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
@@ -55,8 +56,7 @@ const Posts = async ({
 }) => {
   let data: Post[] = [];
   try {
-    // console.log("Posts 내부 searchParams:", searchParams);
-    alert(`Posts 내부 searchParams: ${searchParams}`);
+    console.log("Posts 내부 searchParams:", searchParams);
     data = await getAll(searchParams);
 
     // Removing duplicates
