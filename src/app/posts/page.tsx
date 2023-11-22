@@ -54,6 +54,7 @@ const Posts = async ({
 }) => {
   let data: Post[] = [];
   try {
+    console.log("Posts 내부 searchParams:", searchParams);
     data = await getAll(searchParams);
 
     // Removing duplicates

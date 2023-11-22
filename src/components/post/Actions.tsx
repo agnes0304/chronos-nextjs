@@ -47,18 +47,17 @@ const Actions = ({ fileName, blogLink, isPaid }: ActionsProps) => {
   };
 
   const paymentHandler = () => {
-    console.log("paymentHandler");
-    window.open("https://www.payapp.kr/L/z3eWSD");
+    window.open("https://www.payapp.kr/L/z3eWSD"); // 정상 작동함 -> 리다이렉트 문제 해결해야 함. 아무것도 리턴하지 않음. 
   }
 
   return (
     <div className="flex justify-end gap-3">
       <button
         type="button"
-        onClick={isPaid ? downloadHandler : paymentHandler}
+        onClick={isPaid ? paymentHandler : downloadHandler}
         className="h-[30px] border border-gray-400 rounded-full text-sm text-gray-400 flex justify-center items-center group p-1 px-2 hover:border-indigo-300 hover:bg-indigo-300 hover:text-white active:bg-indigo-400 active:shadow-inner transition-all duration-200 ease-in-out"
       >
-        <span className="mr-1">{isPaid ? '다운로드':'구매하기'}</span>
+        <span className="mr-1">{isPaid ? '구매하기':'다운로드'}</span>
         <FontAwesomeIcon icon={faDownload} />
       </button>
       <button
