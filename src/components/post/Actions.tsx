@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import Link from 'next/link'
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -52,10 +52,10 @@ const Actions = ({ fileName, blogLink, isPaid, price }: ActionsProps) => {
     const body = {
       price: price,
     };
-  
+
     try {
       const res = await axios.post(`${baseUrl}/payment`, body);
-      if (res.data.status === 'success') {
+      if (res.data.status === "success") {
         const redirectUrl = res.data.url;
         setRedirectUrl(redirectUrl);
       } else {
@@ -74,9 +74,11 @@ const Actions = ({ fileName, blogLink, isPaid, price }: ActionsProps) => {
         className="h-[30px] border border-gray-400 rounded-full text-sm text-gray-400 flex justify-center items-center group p-1 px-2 hover:border-indigo-300 hover:bg-indigo-300 hover:text-white active:bg-indigo-400 active:shadow-inner transition-all duration-200 ease-in-out"
       >
         {isPaid ? (
-          <span className="mr-1">구매하기</span>
+          <Link href={redirectUrl} className="mr-1">
+            다운로드
+          </Link>
         ) : (
-          <Link href={redirectUrl} className="mr-1">다운로드</Link>
+          <span className="mr-1">구매하기</span>
         )}
         {/* <span className="mr-1">{isPaid ? '구매하기':'다운로드'}</span> */}
         <FontAwesomeIcon icon={faDownload} />
