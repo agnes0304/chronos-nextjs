@@ -1,17 +1,34 @@
-import axios from "axios"
-const baseurl = process.env.NEXT_PUBLIC_BASE_URL
-
-// 어떻게 구매한 파일의 다운로드 링크를 받아올지
+"use client";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { HashMobile } from "@/components/payment/HashMobile";
 
 const Success = () => {
+  const router = useRouter();
+  const [mobile, setMobile] = useState("");
 
-    return (
-        <div>
-            <h1>결제를 완료하셨다면 주문 시 입력한 핸드폰 번호를 입력 후 아래 다운로드 버튼을 눌러주세요!</h1>
-            <input type="text" placeholder="핸드폰 번호"></input>
-            <button>다운로드</button>
-        </div>
-    )
-}
+  const lookUpHandler = () => {
+    if (mobile) {
+      const hashedMobile = HashMobile(mobile);
+      router.push(`/payment/success/${hashedMobile}`);
+    }
+  };
 
-export default Success
+  return (
+    <div>
+      <h1>
+        주문 시에 입력하신 핸드폰 번호를 입력 후 아래 다운로드 버튼을
+        눌러주세요!
+      </h1>
+      <input
+        type="text"
+        placeholder="핸드폰 번호"
+        value={mobile}
+        onChange={(e) => setMobile(e.target.value)}
+      ></input>
+      <button onClick={lookUpHandler}>다운로드</button>
+    </div>
+  );
+};
+
+export default Success;

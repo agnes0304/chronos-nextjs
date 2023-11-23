@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -10,12 +10,12 @@ type ActionsProps = {
   fileName: string;
   blogLink: string;
   isPaid: boolean;
-  price: number;
+  title: string;
 };
 
-const Actions = ({ fileName, blogLink, isPaid, price }: ActionsProps) => {
+const Actions = ({ fileName, blogLink, isPaid, title }: ActionsProps) => {
+  const router = useRouter();
   const [fileUrl, setFileUrl] = useState("");
-  const [redirectUrl, setRedirectUrl] = useState("");
 
   useEffect(() => {
     const getFileUrl = async () => {
@@ -48,22 +48,9 @@ const Actions = ({ fileName, blogLink, isPaid, price }: ActionsProps) => {
     }
   };
 
-  const paymentHandler = async () => {
-    const body = {
-      price: price,
-    };
-
-    try {
-      const res = await axios.post(`${baseUrl}/payment`, body);
-      if (res.data.status === "success") {
-        const redirectUrl = res.data.url;
-        setRedirectUrl(redirectUrl);
-      } else {
-        console.log(res.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const paymentHandler = () => {
+    // ?product=${title}로 쿼리 만들어서 보내기
+    router.push(`/payment?product=${title}`);
   };
 
   return (
@@ -74,9 +61,7 @@ const Actions = ({ fileName, blogLink, isPaid, price }: ActionsProps) => {
         className="h-[30px] border border-gray-400 rounded-full text-sm text-gray-400 flex justify-center items-center group p-1 px-2 hover:border-indigo-300 hover:bg-indigo-300 hover:text-white active:bg-indigo-400 active:shadow-inner transition-all duration-200 ease-in-out"
       >
         {isPaid ? (
-          <Link href={redirectUrl} className="mr-1">
-            구매하기
-          </Link>
+          <span className="mr-1">구매하기</span>
         ) : (
           <span className="mr-1">다운로드</span>
         )}

@@ -65,7 +65,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
       <div>
         <p className="text-gray-500">{data.body}</p>
       </div>
-      <Actions fileName={data.filename_ex} blogLink={data.bloglink} isPaid={data.isPaid} price={data.price} />
+      <Actions fileName={data.filename_ex} blogLink={data.bloglink} isPaid={data.isPaid} title={data.title} />
     </article>
   );
 };
