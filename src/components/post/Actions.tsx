@@ -75,10 +75,10 @@ const Actions = ({ fileName, blogLink, isPaid, price }: ActionsProps) => {
       >
         {isPaid ? (
           <Link href={redirectUrl} className="mr-1">
-            다운로드
+            구매하기
           </Link>
         ) : (
-          <span className="mr-1">구매하기</span>
+          <span className="mr-1">다운로드</span>
         )}
         {/* <span className="mr-1">{isPaid ? '구매하기':'다운로드'}</span> */}
         <FontAwesomeIcon icon={faDownload} />
