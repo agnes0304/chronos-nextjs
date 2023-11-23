@@ -1,7 +1,7 @@
 const Payment = () => {
     return (
         <div>
-            <h1>Payment</h1>
+            <h1>결제창</h1>
         </div>
     )
 }

@@ -14,6 +14,7 @@ type Post = {
   bloglink: string;
   createdAt: string;
   isPaid: boolean;
+  price: number;
 };
 
 async function getPost(param: string) {
@@ -36,6 +37,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
     bloglink: "",
     createdAt: "",
     isPaid: false,
+    price: 0,
   };
 
   try {
@@ -63,7 +65,7 @@ const Post = async ({ params }: { params: { id: string } }) => {
       <div>
         <p className="text-gray-500">{data.body}</p>
       </div>
-      <Actions fileName={data.filename_ex} blogLink={data.bloglink} isPaid={data.isPaid} />
+      <Actions fileName={data.filename_ex} blogLink={data.bloglink} isPaid={data.isPaid} price={data.price} />
     </article>
   );
 };

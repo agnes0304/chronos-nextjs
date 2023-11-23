@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Link from 'next/link'
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -9,16 +10,17 @@ type ActionsProps = {
   fileName: string;
   blogLink: string;
   isPaid: boolean;
+  price: number;
 };
 
-const Actions = ({ fileName, blogLink, isPaid }: ActionsProps) => {
+const Actions = ({ fileName, blogLink, isPaid, price }: ActionsProps) => {
   const [fileUrl, setFileUrl] = useState("");
+  const [redirectUrl, setRedirectUrl] = useState("");
 
   useEffect(() => {
     const getFileUrl = async () => {
       try {
         const res = await axios.get(`${baseUrl}/download/${fileName}`);
-        // const res = await axios.get(`${baseUrl}/download/test.jpg`);
         setFileUrl(res.data.url);
       } catch (error) {
         console.log(error);
@@ -46,9 +48,23 @@ const Actions = ({ fileName, blogLink, isPaid }: ActionsProps) => {
     }
   };
 
-  const paymentHandler = () => {
-    window.open("https://www.payapp.kr/L/z3eWSD"); // 정상 작동함 -> 리다이렉트 문제 해결해야 함. 아무것도 리턴하지 않음. 
-  }
+  const paymentHandler = async () => {
+    const body = {
+      price: price,
+    };
+  
+    try {
+      const res = await axios.post(`${baseUrl}/payment`, body);
+      if (res.data.status === 'success') {
+        const redirectUrl = res.data.url;
+        setRedirectUrl(redirectUrl);
+      } else {
+        console.log(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex justify-end gap-3">
@@ -57,14 +73,21 @@ const Actions = ({ fileName, blogLink, isPaid }: ActionsProps) => {
         onClick={isPaid ? paymentHandler : downloadHandler}
         className="h-[30px] border border-gray-400 rounded-full text-sm text-gray-400 flex justify-center items-center group p-1 px-2 hover:border-indigo-300 hover:bg-indigo-300 hover:text-white active:bg-indigo-400 active:shadow-inner transition-all duration-200 ease-in-out"
       >
-        <span className="mr-1">{isPaid ? '구매하기':'다운로드'}</span>
+        {isPaid ? (
+          <span className="mr-1">구매하기</span>
+        ) : (
+          <Link href={redirectUrl} className="mr-1">다운로드</Link>
+        )}
+        {/* <span className="mr-1">{isPaid ? '구매하기':'다운로드'}</span> */}
         <FontAwesomeIcon icon={faDownload} />
       </button>
       <button
         type="button"
         className="h-[30px] border border-gray-400 rounded-full text-sm text-gray-400 flex justify-center items-center group p-1 px-2 hover:border-indigo-300 hover:bg-indigo-300 hover:text-white active:bg-indigo-400 active:shadow-inner transition-all duration-200 ease-in-out"
       >
-        <a href={blogLink} target="_blank" className="mr-1">자세히 보기</a>
+        <a href={blogLink} target="_blank" className="mr-1">
+          자세히 보기
+        </a>
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
