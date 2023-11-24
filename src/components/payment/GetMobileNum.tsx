@@ -1,5 +1,3 @@
-"use client";
-
 type GetMobileNumProps = {
   mobile: string;
   setMobile: React.Dispatch<React.SetStateAction<string>>;
