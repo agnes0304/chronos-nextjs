@@ -55,6 +55,7 @@ const Payment = ({
       document.body.removeChild(script);
       payButton?.removeEventListener("click", payappPay);
     };
+    // 필수 파라미터 누락으로 나옴
   }, []);
 
   return (
