@@ -21,11 +21,7 @@ async function getOrder(mobile: string) {
   }
 }
 
-const DownloadData = async ({
-  params,
-}: {
-  params: { mobile: string };
-}) => {
+const DownloadData = async ({ params }: { params: { mobile: string } }) => {
   let data: s3Url = { url: [] };
   try {
     if (params.mobile) {
@@ -39,7 +35,25 @@ const DownloadData = async ({
   }
 
   return (
-    <></>
+    <div className="flex flex-col w-[90vw] justify-center items-center">
+      <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
+        <h1 className="text-xl font-semibold text-gray-600">
+          구매하신 자료입니다.
+        </h1>
+        <p className="text-sm text-gray-500">
+          아래 링크를 <span className="text-rose-500 font-semibold">전부</span> 눌러 다운로드 받아주세요.
+        </p>
+        <div>
+          <ul className="text-gray-500 font-light text-md">
+            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
+            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
+            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
+            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
+            <li>자료 다운로드 링크 여기에 들어감</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 
