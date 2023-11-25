@@ -20,7 +20,7 @@ const GetMobileNum = ({
       </h1>
       <input
         className="p-2 px-3 border border-gray-400 rounded-full w-[300px]"
-        type="text"
+        type="number"
         placeholder="'-'는 제외하고 입력해주세요!"
         value={mobile}
         onChange={(e) => setMobile(e.target.value)}
