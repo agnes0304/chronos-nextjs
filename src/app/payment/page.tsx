@@ -1,69 +1,146 @@
 "use client";
-import { useEffect } from "react";
-const userid = process.env.PAYAPP_USERID;
-const shopname = process.env.PAYAPP_SHOPNAME;
-const returnUrl = process.env.PAYAPP_RETURNURL;
+import { useEffect, useState } from "react";
+const userid = process.env.NEXT_PAYAPP_USERID;
+const shopname = process.env.NEXT_PAYAPP_SHOPNAME;
+const returnUrl = process.env.NEXT_PAYAPP_RETURNURL;
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-declare var PayApp: any;
 
 const Payment = ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
+  const productName = searchParams.product;
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [productPrice, setproductPrice] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
   useEffect(() => {
-    const product = searchParams.product;
+    const product = searchParams.product; // test하기 위함.
     const body = { name: product };
-    const data = fetch(`${baseUrl}/product`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((data) => data);
-    console.log(data);
-    const price = data.then((data) => data.price);
 
-    // 페이앱 결제창 불러오기
-    const script = document.createElement("script");
-    script.src = "//lite.payapp.kr/public/api/payapp-lite.js";
-    script.async = true;
+    async function fetchData() {
+      try {
+        const response = await fetch(`${baseUrl}/product`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
 
-    script.onload = () => {
-      PayApp.setDefault("userid", userid);
-      PayApp.setDefault("shopname", shopname);
-    };
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
-    document.body.appendChild(script);
-
-    function payappPay() {
-      PayApp.setParam("goodname", searchParams.product);
-      PayApp.setParam("price", price);
-      PayApp.setParam("recvphone", "01000000000");
-      PayApp.setParam("returnurl", returnUrl);
-      PayApp.setParam("smsuse", "n");
-      PayApp.setParam("redirectpay", "1");
-      PayApp.setParam("skip_cstpage", "y");
-      PayApp.call();
+        const data = await response.json();
+        // console.log(data); // {id: 1, name: 'test', price: 1000}
+        const price = data.price;
+        setproductPrice(price);
+      } catch (error) {
+        console.log("There was a problem with the fetch operation:", error);
+      }
     }
-
-    const payButton = document.getElementById("payButton");
-    payButton?.addEventListener("click", payappPay);
-
-    return () => {
-      document.body.removeChild(script);
-      payButton?.removeEventListener("click", payappPay);
-    };
-    // 필수 파라미터 누락으로 나옴
+    fetchData();
+    // price는 int여야 함.
   }, []);
 
+  useEffect(() => {
+    if (mobileNumber) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, [mobileNumber]);
+
+  const submitHandler = async () => {
+    try {
+      const body = { goodname: {productName}, price: {productPrice}, recvphone: {mobileNumber}, userid: {userid}, shopname: {shopname}, returnurl: {returnUrl} };
+      const response = await fetch(`${baseUrl}/paying_payapp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log("There was a problem with the fetch operation:", error);
+    }
+  };
+
   return (
-    <div>
-      <h1>결제창</h1>
-      <a href="#" id="payButton">
-        결제하기
-      </a>
+    <div className="flex flex-col w-[90vw] justify-center items-center">
+      <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
+        <h1 className="text-xl font-semibold text-gray-600">
+          핸드폰 번호를 입력해주세요!
+        </h1>
+        <p className="text-base font-light text-gray-700">
+          입력하신 번호로{" "}
+          <span className="text-rose-500 font-normal">주문내역 확인</span>이
+          가능합니다.
+        </p>
+        <div className="w-full">
+          <h2 className="text-base font-medium text-gray-400 mb-1">주문서</h2>
+          <div className="w-full border-b border-t border-gray-400">
+            <table className="text-sm text-gray-500 font-normal">
+              <tbody>
+                <tr>
+                  <td className="p-4 text-center">판매자명</td>
+                  <td className="p-4 text-center">화석</td>
+                </tr>
+                <tr>
+                  <td className="p-4 text-center">상품명</td>
+                  <td className="p-4 text-center">{productName}</td>
+                </tr>
+                <tr>
+                  <td className="p-4 text-center">가격</td>
+                  <td className="p-4 text-center">{productPrice}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <form
+          onSubmit={submitHandler}
+          name="결제폼"
+          className="flex flex-col gap-4"
+        >
+          <input type="hidden" disabled name="cmd" value="payrequest" />
+          <input type="hidden" disabled name="userid" value={userid} />
+          <input type="hidden" disabled name="shopname" value={shopname} />
+          <input type="hidden" disabled name="goodname" value={productName} />
+          <input type="hidden" disabled name="price" value={productPrice} />
+
+          <input
+            className="p-2 px-3 border border-gray-400 rounded-full w-[320px]"
+            type="number"
+            name="recvphone"
+            placeholder="'-'를 제외한 핸드폰 번호를 입력해주세요"
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
+          />
+
+          <input type="hidden" disabled name="returnurl" value={returnUrl} />
+          <input type="hidden" disabled name="smsuse" value="n" />
+          <input type="hidden" disabled name="redirectpay" value="1" />
+          <input type="hidden" disabled name="skip_cstpage" value="y" />
+        </form>
+        <button
+          type="submit"
+          className={`${
+            !isActive
+              ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+              : "bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400"
+          } h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out`}
+          disabled={!isActive}
+        >
+          결제하기
+        </button>
+        {/* <a href="#" id="payButton">결제하기 테스트</a> */}
+      </div>
     </div>
   );
 };
