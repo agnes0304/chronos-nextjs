@@ -1,16 +1,17 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 type s3Url = {
-  url: string[];
+  urls: string[];
 };
 
 // params의 key로 get요청을 보내서 해당 mobile을 가진 order를 찾아서 그 order의 product를 보여줌.
 // /orders로 GET요청 body에 params.mobile
 async function getOrder(mobile: string) {
   try {
-    // http request body에 params.mobile -> fetch로 get요청
     const res = await fetch(`${baseUrl}/orders`, {
-      method: "GET",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ hashed_mobile: mobile }),
     });
@@ -22,11 +23,10 @@ async function getOrder(mobile: string) {
 }
 
 const DownloadData = async ({ params }: { params: { mobile: string } }) => {
-  let data: s3Url = { url: [] };
+  let data: s3Url = { urls: [] };
   try {
     if (params.mobile) {
       data = await getOrder(params.mobile);
-      console.log(data);
     } else {
       throw new Error("파라미터 잘못됨.");
     }
@@ -44,12 +44,22 @@ const DownloadData = async ({ params }: { params: { mobile: string } }) => {
           아래 링크를 <span className="text-rose-500 font-semibold">전부</span> 눌러 다운로드 받아주세요.
         </p>
         <div>
-          <ul className="text-gray-500 font-light text-md">
-            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
-            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
-            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
-            <li className="mb-1">자료 다운로드 링크 여기에 들어감</li>
-            <li>자료 다운로드 링크 여기에 들어감</li>
+          <ul className="text-gray-500 font-base text-md">
+            {data.urls.map((url, index) => {
+              return (
+                <li key={index} className="mb-1 w-full">
+                  <a
+                    className="text-indigo-400 hover:text-indigo-600 w-full"
+                    href={url}
+                    target="_blank"
+                  >
+                    <FontAwesomeIcon icon={faFileArrowDown} /> {index + 1}번 자료입니다. 
+                  </a>
+                </li>
+              );
+            }
+            )}
+
           </ul>
         </div>
       </div>

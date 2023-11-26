@@ -1,8 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-const userid = process.env.NEXT_PAYAPP_USERID;
-const shopname = process.env.NEXT_PAYAPP_SHOPNAME;
-const returnUrl = process.env.NEXT_PAYAPP_RETURNURL;
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Payment = ({
@@ -53,7 +50,7 @@ const Payment = ({
 
   const submitHandler = async () => {
     try {
-      const body = { goodname: {productName}, price: {productPrice}, recvphone: {mobileNumber}, userid: {userid}, shopname: {shopname}, returnurl: {returnUrl} };
+      const body = { goodname: {productName}, price: {productPrice}, recvphone: {mobileNumber} };
       const response = await fetch(`${baseUrl}/paying_payapp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -104,16 +101,10 @@ const Payment = ({
           </div>
         </div>
         <form
-          onSubmit={submitHandler}
+        //   onSubmit={submitHandler}
           name="결제폼"
           className="flex flex-col gap-4"
         >
-          <input type="hidden" disabled name="cmd" value="payrequest" />
-          <input type="hidden" disabled name="userid" value={userid} />
-          <input type="hidden" disabled name="shopname" value={shopname} />
-          <input type="hidden" disabled name="goodname" value={productName} />
-          <input type="hidden" disabled name="price" value={productPrice} />
-
           <input
             className="p-2 px-3 border border-gray-400 rounded-full w-[320px]"
             type="number"
@@ -122,14 +113,10 @@ const Payment = ({
             value={mobileNumber}
             onChange={(e) => setMobileNumber(e.target.value)}
           />
-
-          <input type="hidden" disabled name="returnurl" value={returnUrl} />
-          <input type="hidden" disabled name="smsuse" value="n" />
-          <input type="hidden" disabled name="redirectpay" value="1" />
-          <input type="hidden" disabled name="skip_cstpage" value="y" />
         </form>
         <button
-          type="submit"
+          type="button"
+          onClick={submitHandler}
           className={`${
             !isActive
               ? "bg-gray-300 text-gray-400 cursor-not-allowed"
