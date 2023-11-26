@@ -1,29 +1,13 @@
-"use client";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 const GotoPaymentSuccess = () => {
-  const [isHover, setIsHover] = useState(false);
   return (
     <div>
-      <div
-        className="text-gray-500 hover:text-indigo-500 cursor-pointer"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <div className="flex gap-1 border p-1.5 border-gray-400 rounded-md items-center text-gray-400 cursor-pointer hover:text-white hover:bg-indigo-300 hover:border-indigo-300 active:bg-indigo-400 scale-90 hover:scale-100 transition-transform duration-300 ease-in-out transform hover:shadow-md">
         <FontAwesomeIcon icon={faFileArrowDown} />
+        <p className="text-sm">다운로드</p>
       </div>
-      {/* speech bubble에 p태그 내 글자 보이게하기 */}
-      {isHover && (
-        <div className="relative">
-          <div className="absolute right-[10%] w-[120px] h-[30px] shadow-md rounded-lg">
-            <p className="absolute top-[20%] w-full text-gray-600 text-xs font-base text-center">
-              구매한 자료 다운로드
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
