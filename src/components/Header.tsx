@@ -1,14 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import fossilLogo from "../../public/fossilLogo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import GotoPaymentSuccess from "./payment/GotoPaymentSuccess";
 
 const Header = () => {
   return (
     <header className="fixed top-0 left-0 w-[100vw] py-4 flex justify-center items-center bg-white">
-      <div className="w-[90vw] flex justify-between">
+      <div className="w-[90vw] flex justify-between items-center">
         <Link href="/">
           <div className="flex justify-center items-center cursor-pointer">
             <Image
