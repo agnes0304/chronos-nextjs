@@ -1,3 +1,5 @@
+// 아직 사용 안함
+
 const SideMenu = () => {
     return (
         <div>

@@ -13,7 +13,7 @@ const Payment = ({
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    const product = searchParams.product; // test하기 위함.
+    const product = searchParams.product; 
     const body = { name: product };
 
     async function fetchData() {
@@ -37,7 +37,6 @@ const Payment = ({
       }
     }
     fetchData();
-    // price는 int여야 함.
   }, []);
 
   useEffect(() => {

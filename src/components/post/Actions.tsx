@@ -49,7 +49,6 @@ const Actions = ({ fileName, blogLink, isPaid, title }: ActionsProps) => {
   };
 
   const paymentHandler = () => {
-    // ?product=${title}로 쿼리 만들어서 보내기
     router.push(`/payment?product=${title}`);
   };
 
@@ -65,7 +64,6 @@ const Actions = ({ fileName, blogLink, isPaid, title }: ActionsProps) => {
         ) : (
           <span className="mr-1">다운로드</span>
         )}
-        {/* <span className="mr-1">{isPaid ? '구매하기':'다운로드'}</span> */}
         <FontAwesomeIcon icon={faDownload} />
       </button>
       <button
