@@ -1,5 +1,9 @@
+"use client";
+import { useState, useEffect } from "react";
+import AdminConfirmBtn from "@/components/admin/AdminConfirmBtn";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-type order = {
+
+type Order = {
   id: number;
   email: string;
   product: string;
@@ -22,30 +26,72 @@ async function getOrderQueue() {
   }
 }
 
-const OrderPage = async () => {
-  let data: order[] = [];
+async function confirmOrder(id: number) {
   try {
-    data = await getOrderQueue();
-    console.log(data);
+    const res = await fetch(`${baseUrl}/queue/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    });
+    const confirmed = await res.json();
+    console.log(confirmed);
+    return confirmed;
   } catch (error) {
-    console.log("An error occurred:", error);
+    console.log("confirmOrder 내부 에러: ", error);
   }
+}
+
+const OrderPage = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const orderdata = await getOrderQueue();
+        setOrders(orderdata);
+      } catch (error) {
+        console.log("An error occurred:", error);
+      }
+    };
+
+    fetchData();
+  }, [orders]);
 
   return (
-    <div>
-      <h1>입금확인 요청 내역</h1>
-      {data.map((order, index) => {
-        return (
-          <div key={index}>
-            <p>id: {order.id}</p>
-            <p>email: {order.email}</p>
-            <p>product: {order.product}</p>
-            <p>price: {order.price}</p>
-            <p>createdAt: {order.createdAt}</p>
-            <p>isConfirm: {order.isConfirm}</p>
-          </div>
-        );
-      })}
+    <div className="flex flex-col w-[90vw] justify-start items-center">
+      <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
+        <h1 className="text-xl font-semibold text-gray-600">
+          입금확인 요청 내역
+        </h1>
+        <table className="w-full">
+          <thead className="text-white text-sm font-normal uppercase bg-indigo-500">
+            <tr>
+              <td className="py-1 border text-center p-4">ID</td>
+              <td className="py-1 border text-center p-4">Email</td>
+              <td className="py-1 border text-center p-4">Product</td>
+              <td className="py-1 border text-center p-4">Price</td>
+              <td className="py-1 border text-center p-4">Confirm</td>
+            </tr>
+          </thead>
+          <tbody className="bg-white text-gray-500">
+            {orders.map((order) => (
+              <tr key={order.id} className="text-center border-b">
+                <td className="py-1">{order.id}</td>
+                <td className="py-1">{order.email}</td>
+                <td className="py-1">{order.product}</td>
+                <td className="py-1">{order.price}</td>
+                <td className="py-1">
+                  <div className="w-full flex justify-center items-center">
+                    <AdminConfirmBtn
+                      orderId={order.id}
+                      onConfirm={confirmOrder}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
