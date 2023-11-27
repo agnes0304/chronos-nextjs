@@ -34,6 +34,8 @@ async function confirmOrder(id: number) {
     });
     const confirmed = await res.json();
     console.log(confirmed);
+    // reload
+    location.reload();
     return confirmed;
   } catch (error) {
     console.log("confirmOrder 내부 에러: ", error);
@@ -54,7 +56,7 @@ const OrderPage = () => {
     };
 
     fetchData();
-  }, [orders]);
+  }, []);
 
   return (
     <div className="flex flex-col w-[90vw] justify-start items-center">
