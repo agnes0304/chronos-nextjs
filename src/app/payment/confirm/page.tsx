@@ -1,12 +1,29 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+async function confirmPayment() {
+  try {
+    const res = await fetch(`${baseUrl}/email`, {
+      method: "GET",
+    });
+    const confirmed = await res.json();
+
+    // {'message': "sent"} 
+    return confirmed;
+  } catch (error) {
+    console.log("confirmPayment 내부 에러: ", error);
+  }
+}
+
 const ConfirmPage = () => {
   const [isConfirm, setIsConfirm] = useState(false);
 
   const confirmHandler = () => {
     setIsConfirm(true);
     // 판매자에게 이메일 전송
+    confirmPayment();
   };
 
   return (
@@ -19,7 +36,7 @@ const ConfirmPage = () => {
               이메일 일치 여부 확인 후 다운로드 받으실 수 있습니다.
             </p>
             <p className="text-base font-normal text-gray-600">
-              30분~1시간 정도 소요됩니다. 입력하신 이메일로 알려드릴게요!
+              30분~1시간 정도 소요됩니다.
             </p>
           </div>
           <Link
