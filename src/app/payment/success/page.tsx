@@ -2,7 +2,6 @@
 // import { useRouter } from "next/router"; 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { HashInfo } from "@/components/payment/HashInfo";
 import ExpirationConfirm from "@/components/payment/ExpirationConfirm";
 import GetPersonalInfo from "@/components/payment/GetPersonalInfo";
 
@@ -14,8 +13,7 @@ const Success = () => {
 
   const lookUpHandler = () => {
     if (email) {
-      const hashedEmail = HashInfo(email);
-      router.push(`/payment/success/${hashedEmail}`);
+      router.push(`/payment/success/${email}`);
     }
   };
 

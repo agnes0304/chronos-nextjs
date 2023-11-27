@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import PayActions from "@/components/payment/PayActions";
 
@@ -9,12 +10,12 @@ const Payment = ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
+  const router = useRouter();
   const productName = searchParams.product;
   const [email, setEmail] = useState("");
   const [productPrice, setproductPrice] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
-
 
   useEffect(() => {
     const product = searchParams.product;
@@ -47,25 +48,34 @@ const Payment = ({
     }
   }, [email, isCheck]);
 
-  const submitHandler = async () => {
+  const submitHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    url: string
+  ) => {
+    e.preventDefault();
+    if (!isActive) return;
+
+    window.open(url, "_blank");
+
     try {
       const body = {
-        goodname: { productName },
-        price: { productPrice },
-        email: { email },
+        product: productName,
+        price: productPrice,
+        email: email,
       };
-      const response = await fetch(`${baseUrl}/paying_payapp`, {
+      const response = await fetch(`${baseUrl}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
-      if (!response.ok) {
+      const data = await response.json();
+
+      if (!data) {
         throw new Error("Network response was not ok");
       }
 
-      const data = await response.json();
-      console.log(data);
+      router.push("/payment/confirm");
     } catch (error) {
       console.log("There was a problem with the fetch operation:", error);
     }
@@ -77,9 +87,9 @@ const Payment = ({
         <h1 className="text-xl font-semibold text-gray-600">
           이메일을 입력해주세요!
         </h1>
-        <p className="text-base font-light text-gray-700">
+        <p className="text-base font-normal text-gray-500">
           입력하신 이메일로{" "}
-          <span className="text-rose-500 font-normal">
+          <span className="text-rose-500 font-medium">
             입금 및 주문내역 확인
           </span>
           이 가능합니다.
@@ -105,10 +115,7 @@ const Payment = ({
             </table>
           </div>
         </div>
-        <form
-          name="결제폼"
-          className="flex flex-col gap-4"
-        >
+        <form name="결제폼" className="flex flex-col gap-4">
           <input
             className="p-2 px-3 border border-gray-400 rounded-full w-[320px]"
             type="email"
@@ -132,6 +139,14 @@ const Payment = ({
             </label>
           </div>
         </form>
+        <div>
+          <p className="text-sm font-normal text-gray-500">
+            송금은 <span className="font-medium text-rose-500">모바일</span>에서 진행해주세요!
+          </p>
+          <p className="text-sm font-normal text-gray-500">
+            버튼 클릭 시 이동하는 주소를 복사해서 사용하실 수 있습니다.
+          </p>
+        </div>
         <PayActions isActive={isActive} submitHandler={submitHandler} />
       </div>
     </div>
