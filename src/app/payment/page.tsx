@@ -8,7 +8,7 @@ const Payment = ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const productName = searchParams.product;
-  const [mobileNumber, setMobileNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [productPrice, setproductPrice] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
@@ -40,16 +40,16 @@ const Payment = ({
   }, []);
 
   useEffect(() => {
-    if (mobileNumber) {
+    if (email) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [mobileNumber]);
+  }, [email]);
 
   const submitHandler = async () => {
     try {
-      const body = { goodname: {productName}, price: {productPrice}, recvphone: {mobileNumber} };
+      const body = { goodname: {productName}, price: {productPrice}, email: {email} };
       const response = await fetch(`${baseUrl}/paying_payapp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -71,11 +71,11 @@ const Payment = ({
     <div className="flex flex-col w-[90vw] justify-center items-center">
       <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
         <h1 className="text-xl font-semibold text-gray-600">
-          핸드폰 번호를 입력해주세요!
+          이메일을 입력해주세요!
         </h1>
         <p className="text-base font-light text-gray-700">
-          입력하신 번호로{" "}
-          <span className="text-rose-500 font-normal">주문내역 확인</span>이
+          입력하신 이메일로{" "}
+          <span className="text-rose-500 font-normal">입금 및 주문내역 확인</span>이
           가능합니다.
         </p>
         <div className="w-full">
@@ -106,11 +106,11 @@ const Payment = ({
         >
           <input
             className="p-2 px-3 border border-gray-400 rounded-full w-[320px]"
-            type="number"
-            name="recvphone"
-            placeholder="'-'를 제외한 핸드폰 번호를 입력해주세요"
-            value={mobileNumber}
-            onChange={(e) => setMobileNumber(e.target.value)}
+            type="email"
+            name="email"
+            placeholder="이메일을 입력해주세요"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </form>
         <button

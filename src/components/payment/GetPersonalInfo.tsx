@@ -1,29 +1,29 @@
-type GetMobileNumProps = {
-  mobile: string;
-  setMobile: React.Dispatch<React.SetStateAction<string>>;
+type GetPersonalInfoProps = {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
   isDisabled: boolean;
   lookUpHandler: () => void;
   setConfirmChecked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const GetMobileNum = ({
-  mobile,
-  setMobile,
+const GetPersonalInfo = ({
+  email,
+  setEmail,
   isDisabled,
   lookUpHandler,
   setConfirmChecked,
-}: GetMobileNumProps) => {
+}: GetPersonalInfoProps) => {
   return (
     <div className="flex flex-col w-[90vw] justify-center items-center gap-4">
       <h1 className="text-lg text-gray-600">
-        주문 시에 입력하신 핸드폰 번호를 아래에 입력해주세요.
+        주문 시에 입력하신 이메일을 아래에 입력해주세요.
       </h1>
       <input
         className="p-2 px-3 border border-gray-400 rounded-full w-[300px]"
-        type="number"
-        placeholder="'-'는 제외하고 입력해주세요!"
-        value={mobile}
-        onChange={(e) => setMobile(e.target.value)}
+        type="email"
+        placeholder="이메일을 입력해주세요!"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       ></input>
       <div className="flex justify-between gap-3">
         <button
@@ -54,4 +54,4 @@ const GetMobileNum = ({
     </div>
   );
 };
-export default GetMobileNum;
+export default GetPersonalInfo;
