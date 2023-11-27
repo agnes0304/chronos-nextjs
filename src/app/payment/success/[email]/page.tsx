@@ -6,7 +6,8 @@ type s3Url = {
   urls: string[];
 };
 
-// params의 key로 get요청을 보내서 해당 mobile을 가진 order를 찾아서 그 order의 product를 보여줌.
+// test url: http://localhost:3000/payment/success/test
+
 async function getOrder(email: string) {
   try {
     const res = await fetch(`${baseUrl}/orders/${email}`, {

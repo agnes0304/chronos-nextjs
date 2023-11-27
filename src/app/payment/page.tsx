@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import PayActions from "@/components/payment/PayActions";
 
+// test url: http://localhost:3000/payment?product=test
 const Payment = ({
   searchParams,
 }: {
@@ -11,17 +13,15 @@ const Payment = ({
   const [email, setEmail] = useState("");
   const [productPrice, setproductPrice] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
+
 
   useEffect(() => {
-    const product = searchParams.product; 
-    const body = { name: product };
-
+    const product = searchParams.product;
     async function fetchData() {
       try {
-        const response = await fetch(`${baseUrl}/product`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
+        const response = await fetch(`${baseUrl}/product/${product}`, {
+          method: "GET",
         });
 
         if (!response.ok) {
@@ -40,16 +40,20 @@ const Payment = ({
   }, []);
 
   useEffect(() => {
-    if (email) {
+    if (email && isCheck) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [email]);
+  }, [email, isCheck]);
 
   const submitHandler = async () => {
     try {
-      const body = { goodname: {productName}, price: {productPrice}, email: {email} };
+      const body = {
+        goodname: { productName },
+        price: { productPrice },
+        email: { email },
+      };
       const response = await fetch(`${baseUrl}/paying_payapp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -75,8 +79,10 @@ const Payment = ({
         </h1>
         <p className="text-base font-light text-gray-700">
           입력하신 이메일로{" "}
-          <span className="text-rose-500 font-normal">입금 및 주문내역 확인</span>이
-          가능합니다.
+          <span className="text-rose-500 font-normal">
+            입금 및 주문내역 확인
+          </span>
+          이 가능합니다.
         </p>
         <div className="w-full">
           <h2 className="text-base font-medium text-gray-400 mb-1">주문서</h2>
@@ -100,7 +106,6 @@ const Payment = ({
           </div>
         </div>
         <form
-        //   onSubmit={submitHandler}
           name="결제폼"
           className="flex flex-col gap-4"
         >
@@ -108,24 +113,26 @@ const Payment = ({
             className="p-2 px-3 border border-gray-400 rounded-full w-[320px]"
             type="email"
             name="email"
-            placeholder="이메일을 입력해주세요"
+            placeholder="@를 포함한 이메일 전체를 입력해주세요"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <div className="flex gap-1">
+            <input
+              type="checkbox"
+              name="confirm"
+              id="confirm"
+              onClick={() => setIsCheck(!isCheck)}
+            />
+            <label
+              htmlFor="confirm"
+              className="text-sm font-normal text-gray-500"
+            >
+              이메일의 오타 여부를 확인해주세요.
+            </label>
+          </div>
         </form>
-        <button
-          type="button"
-          onClick={submitHandler}
-          className={`${
-            !isActive
-              ? "bg-gray-300 text-gray-400 cursor-not-allowed"
-              : "bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400"
-          } h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out`}
-          disabled={!isActive}
-        >
-          결제하기
-        </button>
-        {/* <a href="#" id="payButton">결제하기 테스트</a> */}
+        <PayActions isActive={isActive} submitHandler={submitHandler} />
       </div>
     </div>
   );
