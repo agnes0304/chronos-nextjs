@@ -6,6 +6,7 @@ const ConfirmPage = () => {
 
   const confirmHandler = () => {
     setIsConfirm(true);
+    // 판매자에게 이메일 전송
   };
 
   return (
