@@ -20,26 +20,44 @@ async function getOrderQueue() {
     });
     const data = await res.json();
     return data;
-    // [{'id': 2, 'created_at': '2023-11-27T03:39:27.545984+00:00', 'product': 'test', 'email': 'test@gmail.com', 'price': 1000, 'isConfirm': False}, {'id': 3, 'created_at': '2023-11-27T03:40:51.060711+00:00', 'product': 'test', 'email': 'test01@gmail.com', 'price': 1000, 'isConfirm': False},
   } catch (error) {
     console.log("getOrderQueue 내부 에러: ", error);
   }
 }
 
-async function confirmOrder(id: number) {
+async function confirmOrder(id: number, email:string) {
   try {
     const res = await fetch(`${baseUrl}/queue/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
     });
     const confirmed = await res.json();
-    // reload
-    location.reload();
-    return confirmed;
+    if (confirmed.message === "success") {
+      sendEmail(email);
+      location.reload();
+    }
+    return alert(confirmed.message);
   } catch (error) {
     console.log("confirmOrder 내부 에러: ", error);
   }
 }
+
+async function sendEmail(email: string) {
+  try {
+    const res = await fetch(`${baseUrl}/email/${email}`, {
+      method: "GET",
+    });
+    const result = await res.json();
+
+    if (result.message === "sent") {
+      return "메일 전송에 성공했습니다";
+    }
+    return "메일 전송에 실패했습니다";
+  } catch (error) {
+    console.log("sendEmail 내부 에러: ", error);
+  }
+}
+
 
 const OrderPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -84,7 +102,8 @@ const OrderPage = () => {
                   <div className="w-full flex justify-center items-center">
                     <AdminConfirmBtn
                       orderId={order.id}
-                      onConfirm={confirmOrder}
+                      orderEmail={order.email}
+                      confirmOrder={confirmOrder}
                     />
                   </div>
                 </td>
