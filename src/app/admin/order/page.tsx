@@ -33,7 +33,6 @@ async function confirmOrder(id: number) {
       headers: { "Content-Type": "application/json" },
     });
     const confirmed = await res.json();
-    console.log(confirmed);
     // reload
     location.reload();
     return confirmed;
