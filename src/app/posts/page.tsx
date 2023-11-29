@@ -84,7 +84,7 @@ const Posts = async ({
           <FontAwesomeIcon icon={faList} />
         </div>
         <h1 className="text-gray-400 my-2">PostList</h1>
-        <p className="hidden">아놔 진짜 개빡치네 {JSON.stringify(searchParams)}</p>
+        <p className="hidden">{JSON.stringify(searchParams)}</p>
       </div>
       {!data ? (
         <>
