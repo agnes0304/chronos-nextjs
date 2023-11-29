@@ -55,6 +55,7 @@ const Posts = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   let data;
+  let err:any;
   try {
     console.log("Posts 내부 searchParams:", searchParams);
     data = await getAll(searchParams);
@@ -67,6 +68,7 @@ const Posts = async ({
     });
     data = Array.from(uniqueData.values());
   } catch (error) {
+    err = error;
     console.error("Posts 내부! error occurred:", error);
   }
 
@@ -80,10 +82,13 @@ const Posts = async ({
         <h1 className="text-gray-400 my-2">PostList</h1>
       </div>
       {!data ? (
-        <NoPost />
+        <>
+          <p>{err}</p>
+          <NoPost />
+        </>
       ) : (
         <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
-          {data.map((post : any) => (
+          {data.map((post: any) => (
             <Link
               href={`/posts/${post.id}`}
               key={post.id}
