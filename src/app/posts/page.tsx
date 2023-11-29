@@ -54,13 +54,14 @@ const Posts = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  let data: Post[] = [];
+  let data;
   try {
     console.log("Posts 내부 searchParams:", searchParams);
     data = await getAll(searchParams);
 
     // Removing duplicates
     const uniqueData = new Map<number, Post>();
+    // @ts-ignore
     data.forEach((post) => {
       uniqueData.set(post.id, post);
     });
