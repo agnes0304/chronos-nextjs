@@ -2,14 +2,14 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
+
 const GithubOauth = () => {
   const GithubOauthHandler = async () => {
     try {
       const res = await fetch(`${baseUrl}/signin/github`, {
         method: "GET",
       });
-      const data = await res.json();
-      console.log(data);
+
     } catch (error) {
       console.log("There was a problem with the fetch operation:", error);
     }
