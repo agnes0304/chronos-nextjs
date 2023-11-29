@@ -45,7 +45,8 @@ async function getAll(query?: {
     );
     return res.data;
   } catch (error) {
-    throw new Error("getAll 에러! Failed to fetch data");
+    console.error("getAll 에러! error occurred:", error);
+    throw error;
   }
 }
 
