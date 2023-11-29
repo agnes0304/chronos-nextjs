@@ -61,8 +61,8 @@ const Posts = async ({
 
     // Removing duplicates
     const uniqueData = new Map<number, Post>();
-    // @ts-ignore
-    data.forEach((post) => {
+
+    data.forEach((post: any) => {
       uniqueData.set(post.id, post);
     });
     data = Array.from(uniqueData.values());
