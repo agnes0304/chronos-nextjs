@@ -6,19 +6,20 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   /* height: 100%;  */
 }
 
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 main {
   /* Footer 배치 */
-  flex: 1; 
+  flex: 1;
   overflow-y: auto;
 
   display: flex;
@@ -36,7 +37,7 @@ main {
   scrollbar-width: none; /* For Firefox */
 }
 
-html, 
+html,
 body,
 h1,
 h2,
@@ -54,17 +55,17 @@ ol {
 }
 
 ul.absolute {
-  scrollbar-width: none;  /* For Firefox */
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 /* Custom styling for all scrollbars */
 ul.absolute::-webkit-scrollbar {
-  width: 6px;  /* Width of the vertical scrollbar */
+  width: 6px; /* Width of the vertical scrollbar */
 }
 
 ul.absolute::-webkit-scrollbar-track {
-  background-color: rgb(251, 251, 251); 
+  background-color: rgb(251, 251, 251);
 }
 
 ul.absolute::-webkit-scrollbar-thumb {
@@ -80,7 +81,7 @@ input,
 select,
 textarea {
   margin: 0;
-  border: 0;
+  /* border: 0; */
   padding: 0;
   font-size: 100%;
   font-family: inherit;
@@ -95,4 +96,16 @@ button {
   vertical-align: baseline;
   background-color: transparent;
   cursor: pointer;
+}
+
+/* For Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
