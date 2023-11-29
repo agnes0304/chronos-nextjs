@@ -16,6 +16,7 @@ type Post = {
   createdAt: string;
 };
 
+
 function generateQueryString(params: {
   [key: string]: string | string[] | undefined;
 }) {
@@ -43,6 +44,7 @@ async function getAll(query?: {
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
     );
+
     return res.data;
   } catch (error) {
     console.error("getAll 에러! error occurred:", error);
@@ -57,6 +59,7 @@ const Posts = async ({
 }) => {
   let data;
   let err:any;
+  console.log("try 바깥 searchParams:", searchParams);
   try {
     console.log("Posts 내부 searchParams:", searchParams);
     data = await getAll(searchParams);
@@ -81,6 +84,7 @@ const Posts = async ({
           <FontAwesomeIcon icon={faList} />
         </div>
         <h1 className="text-gray-400 my-2">PostList</h1>
+        <p className="hidden">아놔 진짜 개빡치네 {JSON.stringify(searchParams)}</p>
       </div>
       {!data ? (
         <>
