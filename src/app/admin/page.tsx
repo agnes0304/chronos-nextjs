@@ -3,6 +3,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { useState } from "react";
 import { HashInfo } from "@/components/payment/HashInfo";
 import { useRouter } from "next/navigation";
+import GithubOauth from "@/components/admin/GithubOauth";
 
 const AdminPage = () => {
   const router = useRouter();
@@ -51,6 +52,7 @@ const AdminPage = () => {
       >
         로그인
       </button>
+      <GithubOauth />
     </div>
   );
 };
