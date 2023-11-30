@@ -22,15 +22,15 @@ const GithubOauth = () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
+    console.log("user", user);
     setUser(user);
   }
-
-  
 
   async function signInWithGithub() {
     await supabase.auth.signInWithOAuth({
       provider: "github",
-    });
+      options: { redirectTo: "https://chronos.jiwoo.best/admin/order" },
+    }); 
   }
 
   async function signOut() {

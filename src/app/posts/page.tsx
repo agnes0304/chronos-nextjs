@@ -6,6 +6,7 @@ import Browse from "@/components/search/Browse";
 import Link from "next/link";
 import NoPost from "@/components/post/NoPost";
 
+
 type Post = {
   id: number;
   title: string;
