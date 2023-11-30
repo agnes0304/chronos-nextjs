@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import AdminConfirmBtn from "@/components/admin/AdminConfirmBtn";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { supabase } from "@/components/admin/SupaClient";
 
 type Order = {
   id: number;
@@ -25,7 +26,7 @@ async function getOrderQueue() {
   }
 }
 
-async function confirmOrder(id: number, email:string) {
+async function confirmOrder(id: number, email: string) {
   try {
     const res = await fetch(`${baseUrl}/queue/${id}`, {
       method: "PUT",
@@ -58,20 +59,49 @@ async function sendEmail(email: string) {
   }
 }
 
+async function fetchUserRoleAndEmail(tokenEmail: string) {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("role", 1)
+      .eq("email", tokenEmail);
+
+    if (error) {
+      console.error("Error fetching user:", error);
+      return null;
+    }
+    return data;
+  } catch (err) {
+    console.error("An unexpected error occurred:", err);
+    return null;
+  }
+}
 
 const OrderPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("sb-ezbyvglcocakzgsptqkw-auth-token");
+    if (token === null) {
+      alert("권한이 없습니다.");
+      location.href = "/";
+    }
+    const tokenEmail = JSON.parse(token as string)["user"]["email"];
+    fetchUserRoleAndEmail(tokenEmail).then((data) => {
+      if (data === null) {
+        alert("권한이 없습니다.");
+        location.href = "/";
+      }
+    });
     const fetchData = async () => {
       try {
         const orderdata = await getOrderQueue();
         setOrders(orderdata);
       } catch (error) {
         console.log("An error occurred:", error);
-      }
-    };
-
+      };
+    }
     fetchData();
   }, []);
 

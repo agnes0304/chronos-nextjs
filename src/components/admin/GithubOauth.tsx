@@ -98,6 +98,7 @@ const GithubOauth = () => {
         "Content-Type": "application/json",
       },
     });
+    window.location.href = "https://chronos.jiwoo.best/admin";
   }
 
   if (user) {
