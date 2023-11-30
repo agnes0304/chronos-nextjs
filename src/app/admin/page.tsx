@@ -77,7 +77,7 @@ const AdminPage = () => {
           </button>
         </div>
       )}
-      <GithubOauth />
+      <GithubOauth isLogin={isLogin} setIsLogin={setIsLogin} />
     </>
   );
 };

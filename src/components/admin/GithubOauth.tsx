@@ -7,6 +7,12 @@ import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/components/admin/SupaClient";
 
+type GithubOauthProps = {
+  isLogin: boolean;
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+
 async function sendTokenToServer() {
   const token = localStorage.getItem("sb-ezbyvglcocakzgsptqkw-auth-token");
   if (token === null) {
@@ -44,47 +50,40 @@ async function saveAccessToken() {
   }
 }
 
-async function signInWithGithub() {
-  await supabase.auth.signInWithOAuth({
-    provider: "github",
-    options: { redirectTo: "https://chronos.jiwoo.best/admin" },
-  });
-}
 
-const GithubOauth = () => {
+
+const GithubOauth = ({ isLogin, setIsLogin }: GithubOauthProps) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    window.addEventListener("hashchange", function () {
-      console.log("hash changed");
-      checkUser();
-    });
+    const token = localStorage.getItem("sb-ezbyvglcocakzgsptqkw-auth-token");
+    if (token) {
+      setIsLogin(true);
+      setUser(JSON.parse(token as string)["user"]);
+    }
   }, []);
 
-  async function checkUser() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    setUser(user);
-    if (user) {
-      await saveAccessToken(); // 얘만 동작
-      try{
-        const res = await sendTokenToServer();
-        console.log(res);
-      } catch {
-        console.log("sendTokenToServer() error");
-      }
+  async function signInWithGithub() {
+    await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: { redirectTo: "https://chronos.jiwoo.best/admin" },
+    });
+    await saveAccessToken();
+    try{
+      const res = await sendTokenToServer();
+      console.log(res);
+    } catch {
+      console.log("sendTokenToServer() error");
     }
   }
 
   async function githubSignOut() {
     await supabase.auth.signOut();
     localStorage.removeItem("accessToken");
-    setUser(null);
     window.location.href = "https://chronos.jiwoo.best";
   }
 
-  if (user) {
+  if (isLogin) {
     return (
       <div>
         <button
