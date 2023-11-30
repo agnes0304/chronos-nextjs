@@ -58,16 +58,16 @@ const GithubOauth = ({ isLogin, setIsLogin }: GithubOauthProps) => {
   useEffect(() => {
     const token = localStorage.getItem("sb-ezbyvglcocakzgsptqkw-auth-token");
     if (token) {
-      setIsLogin(true);
       setUser(JSON.parse(token as string)["user"]);
     }
-  }, []);
+  }, [isLogin]);
 
   async function signInWithGithub() {
     await supabase.auth.signInWithOAuth({
       provider: "github",
       options: { redirectTo: "https://chronos.jiwoo.best/admin" },
     });
+    setIsLogin(true);
     await saveAccessToken();
     try{
       const res = await sendTokenToServer();

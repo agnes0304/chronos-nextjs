@@ -18,7 +18,7 @@ const AdminPage = () => {
     } else {
       setIsLogin(false);
     }
-  }, []);
+  }, [isLogin]);
 
   const adminHandler = async () => {
     try {
