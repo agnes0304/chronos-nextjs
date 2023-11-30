@@ -1,24 +1,21 @@
 "use client";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { HashInfo } from "@/components/payment/HashInfo";
 import { useRouter } from "next/navigation";
 import GithubOauth from "@/components/admin/GithubOauth";
+import { LoginContext } from "@/components/admin/LoginContext";
 
 const AdminPage = () => {
+  const { isLogin, setIsLogin } = useContext(LoginContext);
   const router = useRouter();
   const [adminEmail, setAdminEmail] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
 
-  // accessToken있는지 확인하기
+  // isLogin 바뀔때마다 실행
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    
   }, [isLogin]);
+
 
   const adminHandler = async () => {
     try {
@@ -75,7 +72,7 @@ const AdminPage = () => {
           >
             로그인
           </button>
-          <GithubOauth isLogin={isLogin} setIsLogin={setIsLogin} />
+          <GithubOauth />
         </div>
       )}
       
