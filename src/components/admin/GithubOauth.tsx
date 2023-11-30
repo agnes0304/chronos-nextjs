@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/components/admin/SupaClient";
 
-
-
 const GithubOauth = () => {
   const [user, setUser] = useState<User | null>(null);
 
@@ -22,23 +20,23 @@ const GithubOauth = () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    console.log("user", user);
     setUser(user);
   }
 
   async function signInWithGithub() {
     await supabase.auth.signInWithOAuth({
       provider: "github",
-      options: { redirectTo: "https://chronos.jiwoo.best/admin/order" },
-    }); 
+      options: { redirectTo: "https://chronos.jiwoo.best/admin" },
+    });
   }
 
   async function signOut() {
     await supabase.auth.signOut();
+    setUser(null);
   }
 
   if (user) {
-   return (
+    return (
       <div>
         <button
           className="text-white bg-gray-600 hover:bg-gray-700 active:bg-gray-800 h-[42px] w-[160px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
@@ -48,8 +46,9 @@ const GithubOauth = () => {
           <FontAwesomeIcon icon={faGithub} className="mr-2" />
           Github 로그아웃
         </button>
+        {user && <p className="text-white">Signed in: {user.email}</p>}
       </div>
-    ); 
+    );
   }
 
   return (
@@ -62,7 +61,6 @@ const GithubOauth = () => {
         <FontAwesomeIcon icon={faGithub} className="mr-2" />
         Github로 로그인
       </button>
-    
     </div>
   );
 };
