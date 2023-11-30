@@ -85,7 +85,7 @@ const GithubOauth = ({ isLogin, setIsLogin }: GithubOauthProps) => {
 
   if (isLogin) {
     return (
-      <div>
+      <div className="flex flex-col gap-1">
         <button
           className="text-white bg-gray-600 hover:bg-gray-700 active:bg-gray-800 h-[42px] w-[160px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
           type="button"
