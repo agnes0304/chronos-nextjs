@@ -1,4 +1,5 @@
 "use client";
+
 import GithubOauth from "@/components/admin/GithubOauth";
 import EmailLogin from "@/components/admin/EmailLogin";
 import { supabase } from "@/components/admin/SupaClient";
@@ -10,8 +11,8 @@ const AdminPage = () => {
 
   useEffect(() => {
     const checkLogin = async () => {
-      const { data: session } = await supabase.auth.getSession();
-      if (session.session !== null) {
+      const { data: { user }} = await supabase.auth.getUser();
+      if (user) {
         setIsLogin(true);
       }
     };
@@ -34,7 +35,12 @@ const AdminPage = () => {
       ) : (
         <div className="flex flex-col w-[90vw] justify-center items-center gap-4">
           <EmailLogin />
-          <GithubOauth isLogin={isLogin} setIsLogin={setIsLogin} loginedUserData={loginedUserData} setLoginedUserData={setLoginedUserData}/>
+          <GithubOauth
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            loginedUserData={loginedUserData}
+            setLoginedUserData={setLoginedUserData}
+          />
         </div>
       )}
     </>

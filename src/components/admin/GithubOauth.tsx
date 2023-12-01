@@ -17,7 +17,8 @@ const GithubOauth = ({
   loginedUserData,
   setLoginedUserData,
 }: GithubOauthProps) => {
-  const sendUserData = async (userData: any) => {
+
+  const sendUserData = async (userData: {userId: string | undefined, userEmail: string | undefined}) => {
     const res = await fetch(`${baseUrl}/send-user-data`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,12 +41,12 @@ const GithubOauth = ({
     if (error) {
       throw new Error("github login error");
     }
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    await sendUserData({userId: user?.id, userEmail: user?.email});
+
     if (data) {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setLoginedUserData(user);
-      await sendUserData(user);
       setIsLogin(true);
     }
   };
