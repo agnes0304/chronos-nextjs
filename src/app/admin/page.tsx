@@ -5,7 +5,8 @@ import { supabase } from "@/components/admin/SupaClient";
 const AdminPage = () => {
   async function checkLoggedin() {
     const { data: session } = await supabase.auth.getSession();
-    if (session) {
+    console.log(session);
+    if (session && session.session !== null) {
       return (
         <div className="flex flex-col w-[90vw] justify-center items-center gap-4">
           <button

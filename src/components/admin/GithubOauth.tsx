@@ -1,10 +1,11 @@
+"use client";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { supabase } from "@/components/admin/SupaClient";
 
 const GithubOauth = () => {
-  // send token(session) to sever
+
   const sendToken = async (token: any) => {
     const res = await fetch(`${baseUrl}/send-token`, {
       method: "POST",
@@ -25,6 +26,8 @@ const GithubOauth = () => {
       provider: "github",
       options: { redirectTo: "https://chronos.jiwoo.best/admin" },
     });
+
+    // 이 아래 것들이 작동을 하는지 확인해야 함. redirectTo가 먼저되는지, 아님 다 하고 redirect개념인지
     if (error) {
       throw new Error("github login error");
     }
@@ -44,7 +47,7 @@ const GithubOauth = () => {
 
   async function checkGithubLoggedin() {
     const { data: session } = await supabase.auth.getSession();
-    if (session) {
+    if (session && session.session !== null) {
       return (
         <div>
           <button
