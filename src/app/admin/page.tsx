@@ -2,8 +2,8 @@
 
 import GithubOauth from "@/components/admin/GithubOauth";
 import EmailLogin from "@/components/admin/EmailLogin";
-import { supabase } from "@/components/admin/SupaClient";
-import { useState, useEffect } from "react";
+// import { supabase } from "@/components/admin/SupaClient";
+import { useState } from "react";
 
 const AdminPage = () => {
   const [isLogin, setIsLogin] = useState(false);
