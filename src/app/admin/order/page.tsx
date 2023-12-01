@@ -73,10 +73,13 @@ const OrderPage = () => {
 
   useEffect(() => {
     const checkUserAuthorization = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
+      const { data: session } = await supabase.auth.getSession();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       // 확인했음
-      if (user) {
+      if (session.session === null) {
         alert("로그인이 필요합니다");
         window.location.href = "/admin";
       }
@@ -118,6 +121,21 @@ const OrderPage = () => {
             </tr>
           </thead>
           <tbody className="bg-white text-gray-500">
+            {orders.length === 0 && (
+              <tr className="text-center border-b">
+                <td className="py-1">.</td>
+                <td className="py-1">.</td>
+                <td className="py-1">
+                  <p>주문 내역이 없습니다</p>
+                </td>
+                <td className="py-1">.</td>
+                <td className="py-1">
+                  <div className="w-full flex justify-center items-center">
+                    .
+                  </div>
+                </td>
+              </tr>
+            )}
             {orders.map((order) => (
               <tr key={order.id} className="text-center border-b">
                 <td className="py-1">{order.id}</td>
