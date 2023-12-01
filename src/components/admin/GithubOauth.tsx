@@ -12,7 +12,7 @@ type GithubOauthProps = {
 const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
 
   const sendUserData = async (userData: any) => {
-    const res = await fetch(`${baseUrl}/send-token`, {
+    const res = await fetch(`${baseUrl}/send-user-data`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userData }),
@@ -31,8 +31,6 @@ const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
       provider: "github",
       options: { redirectTo: "https://chronos.jiwoo.best/admin" },
     });
-
-    // 이 아래 것들이 작동을 하는지 확인해야 함. redirectTo가 먼저되는지, 아님 다 하고 redirect개념인지
     if (error) {
       throw new Error("github login error");
     }
