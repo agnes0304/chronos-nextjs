@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import AdminConfirmBtn from "@/components/admin/AdminConfirmBtn";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { supabase } from "@/components/admin/SupaClient";
@@ -61,6 +61,7 @@ async function sendEmail(email: string) {
 
 const OrderPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [ userData, setUserData ] = useState<any>({});
 
   const fetchData = async () => {
     try {
@@ -80,7 +81,9 @@ const OrderPage = () => {
         window.location.href = "/";
       }
 
-      const userId = (session as any).users.id; 
+      const { data: { user } } = await supabase.auth.getUser()
+      const userId = user?.id;
+      const userEmail = user?.email;
 
       const { data: userRole } = await supabase
         .from("users")
@@ -94,6 +97,7 @@ const OrderPage = () => {
         return;
       }
 
+      setUserData(user);
       fetchData();
     };
 
@@ -106,6 +110,7 @@ const OrderPage = () => {
         <h1 className="text-xl font-semibold text-gray-600">
           입금확인 요청 내역
         </h1>
+        {userData}
         <table className="w-full">
           <thead className="text-white text-sm font-normal uppercase bg-indigo-500">
             <tr>
