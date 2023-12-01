@@ -89,7 +89,7 @@ const OrderPage = () => {
       const { data: userRole, error } = await supabase
         .from("users")
         .select("*")
-        // .eq("id", userId)
+        .eq("id", userId)
         .single();
         // 무조건 1개의 row는 와야 정상임. 
 

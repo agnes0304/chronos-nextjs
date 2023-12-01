@@ -21,8 +21,8 @@ const AdminPage = () => {
     const data = await res.json();
 
     if (data && data.message === 0) {
-      console.log("sending token faliure");
-      throw new Error("sending token faliure");
+      console.log("sending token failure");
+      throw new Error("sending token faailure");
     } else if (data.message === 1) {
       console.log("insertion failure");
       throw new Error("insertion failure");
