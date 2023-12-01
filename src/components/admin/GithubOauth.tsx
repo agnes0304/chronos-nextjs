@@ -23,7 +23,7 @@ const GithubOauth = ({
 
   const githubLogoutHandler = async () => {
     const { error } = await supabase.auth.signOut();
-    // setIsLogin(false);
+    window.location.href = "/admin";
     if (error) {
       console.log(error);
       throw new Error("github logout error");
