@@ -61,7 +61,6 @@ async function sendEmail(email: string) {
 
 const OrderPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [ userData, setUserData ] = useState<any>({});
 
   const fetchData = async () => {
     try {
@@ -74,20 +73,20 @@ const OrderPage = () => {
 
   useEffect(() => {
     const checkUserAuthorization = async () => {
-      const { data: session } = await supabase.auth.getSession();
+      const { data: { user } } = await supabase.auth.getUser()
 
-      if (session.session === null) {
+      // 확인했음
+      if (user) {
         alert("로그인이 필요합니다");
         window.location.href = "/admin";
       }
 
-      const { data: { user } } = await supabase.auth.getUser()
       const userId = user?.id;
 
       const { data: userRole } = await supabase
         .from("users")
         .select("role")
-        .eq("id", userId)
+        .eq("uid", userId)
         .single();
 
       if (userRole && userRole.role !== 1) {
@@ -96,7 +95,6 @@ const OrderPage = () => {
         return;
       }
 
-      setUserData(user);
       fetchData();
     };
 
