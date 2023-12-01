@@ -7,10 +7,16 @@ import { supabase } from "@/components/admin/SupaClient";
 type GithubOauthProps = {
   isLogin: boolean;
   setIsLogin: (isLogin: boolean) => void;
+  loginedUserData?: any;
+  setLoginedUserData: (loginedUserData: any) => void;
 };
 
-const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
-
+const GithubOauth = ({
+  isLogin,
+  setIsLogin,
+  loginedUserData,
+  setLoginedUserData,
+}: GithubOauthProps) => {
   const sendUserData = async (userData: any) => {
     const res = await fetch(`${baseUrl}/send-user-data`, {
       method: "POST",
@@ -35,7 +41,10 @@ const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
       throw new Error("github login error");
     }
     if (data) {
-      const { data: { user } } = await supabase.auth.getUser()
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setLoginedUserData(user);
       await sendUserData(user);
       setIsLogin(true);
     }
@@ -49,7 +58,6 @@ const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
       throw new Error("github logout error");
     }
   };
-
 
   return (
     <>

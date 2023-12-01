@@ -109,12 +109,6 @@ const OrderPage = () => {
         <h1 className="text-xl font-semibold text-gray-600">
           입금확인 요청 내역
         </h1>
-        {userData.email && (
-          <h1 className="text-lg font-semibold text-gray-600">
-            관리자 이메일: {userData.email}
-            관리자 아이디: {userData.id}
-          </h1>
-        )}
         <table className="w-full">
           <thead className="text-white text-sm font-normal uppercase bg-indigo-500">
             <tr>
