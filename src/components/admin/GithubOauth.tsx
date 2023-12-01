@@ -1,38 +1,16 @@
 "use client";
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { supabase } from "@/components/admin/SupaClient";
 
 type GithubOauthProps = {
   isLogin: boolean;
-  setIsLogin: (isLogin: boolean) => void;
-  loginedUserData?: any;
-  setLoginedUserData: (loginedUserData: any) => void;
 };
 
 const GithubOauth = ({
   isLogin,
-  setIsLogin,
-  loginedUserData,
-  setLoginedUserData,
 }: GithubOauthProps) => {
-
-  const sendUserData = async (userData: {userId: string | undefined, userEmail: string | undefined}) => {
-    const res = await fetch(`${baseUrl}/send-user-data`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userData }),
-    });
-    const data = await res.json();
-    if (data && data.message === "success") {
-      console.log("success");
-    } else {
-      console.log("sending token faliure");
-      throw new Error("sending token faliure");
-    }
-  };
-
   const githubLoginHandler = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -41,19 +19,11 @@ const GithubOauth = ({
     if (error) {
       throw new Error("github login error");
     }
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    await sendUserData({userId: user?.id, userEmail: user?.email});
-
-    if (data) {
-      setIsLogin(true);
-    }
   };
 
   const githubLogoutHandler = async () => {
     const { error } = await supabase.auth.signOut();
-    setIsLogin(false);
+    // setIsLogin(false);
     if (error) {
       console.log(error);
       throw new Error("github logout error");
