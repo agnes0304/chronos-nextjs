@@ -13,17 +13,21 @@ const AdminPage = () => {
     userId: string | undefined;
     userEmail: string | undefined;
   }) => {
+
     const res = await fetch(`${baseUrl}/send-user-data`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userData }),
+      body: JSON.stringify(userData),
     });
+
     const data = await res.json();
-    if (data && data.message === "success") {
-      console.log("success");
-    } else {
+
+    if (data && data.message === 0) {
       console.log("sending token faliure");
       throw new Error("sending token faliure");
+    } else if (data.message === 1){
+      console.log("insertion failure");
+      throw new Error("insertion failure");
     }
   };
 

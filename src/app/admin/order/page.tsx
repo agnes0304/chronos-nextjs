@@ -78,7 +78,7 @@ const OrderPage = () => {
 
       if (session.session === null) {
         alert("로그인이 필요합니다");
-        window.location.href = "/";
+        window.location.href = "/admin";
       }
 
       const { data: { user } } = await supabase.auth.getUser()
