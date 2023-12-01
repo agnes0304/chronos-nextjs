@@ -11,11 +11,11 @@ type GithubOauthProps = {
 
 const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
 
-  const sendToken = async (token: any) => {
+  const sendUserData = async (userData: any) => {
     const res = await fetch(`${baseUrl}/send-token`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
+      body: JSON.stringify({ userData }),
     });
     const data = await res.json();
     if (data && data.message === "success") {
@@ -37,8 +37,8 @@ const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
       throw new Error("github login error");
     }
     if (data) {
-      const { data: session } = await supabase.auth.getSession();
-      await sendToken(session);
+      const { data: { user } } = await supabase.auth.getUser()
+      await sendUserData(user);
       setIsLogin(true);
     }
   };
