@@ -75,11 +75,10 @@ const OrderPage = () => {
     const checkUserAuthorization = async () => {
       const { data: session } = await supabase.auth.getSession();
 
-      if (!session) {
+      if (session.session === null) {
         alert("로그인이 필요합니다");
         window.location.href = "/";
       }
-
 
       const userId = (session as any).users.id; 
 

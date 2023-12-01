@@ -24,6 +24,7 @@ const AdminPage = () => {
           <button
             className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
             type="button"
+            onClick={() => (window.location.href = "/admin/order")}
           >
             주문 리스트
           </button>
