@@ -86,16 +86,24 @@ const OrderPage = () => {
 
       const userId = user?.id;
 
-      const { data: userRole } = await supabase
-        .from("users")
-        .select("role")
-        .eq("uid", userId)
-        .single();
+      try {
+        const { data: userRole, error } = await supabase
+          .from("users")
+          .select("role")
+          .eq("uid", userId)
+          .single();
 
-      if (userRole && userRole.role !== 1) {
-        alert("권한이 없습니다.");
-        window.location.href = "/";
-        return;
+        if (error) {
+          throw error;
+        }
+
+        if (userRole && userRole.role !== 1) {
+          alert("권한이 없습니다.");
+          window.location.href = "/";
+          return;
+        }
+      } catch (error) {
+        console.log("supabase 가져오는 try catch 에러: ", error);
       }
 
       fetchData();
