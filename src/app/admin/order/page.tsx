@@ -87,15 +87,11 @@ const OrderPage = () => {
       const userId = user?.id;
 
       try {
-        const { data: userRole, error } = await supabase
+        const { data: userRole } = await supabase
           .from("users")
           .select("role")
           .eq("uid", userId)
-          .single();
-
-        if (error) {
-          throw error;
-        }
+          .maybeSingle();
 
         if (userRole && userRole.role !== 1) {
           alert("권한이 없습니다.");
