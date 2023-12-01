@@ -10,6 +10,7 @@ const AdminPage = () => {
   const [loginedUserData, setLoginedUserData] = useState<any>(null);
 
   const sendUserData = async (userData: {
+    userId: string | undefined;
     userEmail: string | undefined;
   }) => {
     const res = await fetch(`${baseUrl}/send-user-data`, {
@@ -45,6 +46,7 @@ const AdminPage = () => {
   useEffect(() => {
     if (loginedUserData) {
       sendUserData({
+        userId: loginedUserData.id,
         userEmail: loginedUserData.email,
       });
     }
