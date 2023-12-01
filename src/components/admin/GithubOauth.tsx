@@ -1,15 +1,36 @@
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { supabase } from "@/components/admin/SupaClient";
 
 const GithubOauth = () => {
+  // send token(session) to sever
+  const sendToken = async (token: any) => {
+    const res = await fetch(`${baseUrl}/send-token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+    const data = await res.json();
+    if (data && data.message === "success") {
+      console.log("success");
+    } else {
+      console.log("sending token faliure");
+      throw new Error("sending token faliure");
+    }
+  };
+
   const githubLoginHandler = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: { redirectTo: "https://chronos.jiwoo.best/admin" },
     });
     if (error) {
-      return;
+      throw new Error("github login error");
+    }
+    if (data) {
+      const { data: session } = await supabase.auth.getSession();
+      await sendToken(session);
     }
   };
 
@@ -17,7 +38,7 @@ const GithubOauth = () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.log(error);
-      return;
+      throw new Error("github logout error");
     }
   };
 
