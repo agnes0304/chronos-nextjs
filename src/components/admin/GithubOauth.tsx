@@ -38,7 +38,7 @@ const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
     }
     if (data) {
       const { data: session } = await supabase.auth.getSession();
-      await sendToken(session.session);
+      await sendToken(session);
       setIsLogin(true);
     }
   };
