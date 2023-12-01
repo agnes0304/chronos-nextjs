@@ -4,7 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { supabase } from "@/components/admin/SupaClient";
 
-const GithubOauth = () => {
+type GithubOauthProps = {
+  isLogin: boolean;
+  setIsLogin: (isLogin: boolean) => void;
+};
+
+const GithubOauth = ({ isLogin, setIsLogin }:GithubOauthProps) => {
 
   const sendToken = async (token: any) => {
     const res = await fetch(`${baseUrl}/send-token`, {
@@ -33,22 +38,24 @@ const GithubOauth = () => {
     }
     if (data) {
       const { data: session } = await supabase.auth.getSession();
-      await sendToken(session);
+      await sendToken(session.session);
+      setIsLogin(true);
     }
   };
 
   const githubLogoutHandler = async () => {
     const { error } = await supabase.auth.signOut();
+    setIsLogin(false);
     if (error) {
       console.log(error);
       throw new Error("github logout error");
     }
   };
 
-  async function checkGithubLoggedin() {
-    const { data: session } = await supabase.auth.getSession();
-    if (session && session.session !== null) {
-      return (
+
+  return (
+    <>
+      {isLogin ? (
         <div>
           <button
             className="text-white bg-gray-600 hover:bg-gray-700 active:bg-gray-800 h-[42px] w-[160px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
@@ -59,22 +66,20 @@ const GithubOauth = () => {
             로그아웃
           </button>
         </div>
-      );
-    }
-    return (
-      <div>
-        <button
-          className="text-white bg-gray-600 hover:bg-gray-700 active:bg-gray-800 h-[42px] w-[160px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
-          type="button"
-          onClick={() => githubLoginHandler()}
-        >
-          <FontAwesomeIcon icon={faGithub} className="mr-2" />
-          Github로 로그인
-        </button>
-      </div>
-    );
-  }
-  return <>{checkGithubLoggedin()}</>;
+      ) : (
+        <div>
+          <button
+            className="text-white bg-gray-600 hover:bg-gray-700 active:bg-gray-800 h-[42px] w-[160px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
+            type="button"
+            onClick={() => githubLoginHandler()}
+          >
+            <FontAwesomeIcon icon={faGithub} className="mr-2" />
+            Github로 로그인
+          </button>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default GithubOauth;
