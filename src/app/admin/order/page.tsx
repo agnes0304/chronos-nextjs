@@ -59,50 +59,46 @@ async function sendEmail(email: string) {
   }
 }
 
-async function fetchUserRoleAndEmail(tokenEmail: string) {
-  try {
-    const { data, error } = await supabase
-      .from("users")
-      .select("*")
-      .eq("role", 1)
-      .eq("email", tokenEmail);
-
-    if (error) {
-      console.error("Error fetching user:", error);
-      return null;
-    }
-    return data;
-  } catch (err) {
-    console.error("An unexpected error occurred:", err);
-    return null;
-  }
-}
-
 const OrderPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
 
+  const fetchData = async () => {
+    try {
+      const orderdata = await getOrderQueue();
+      setOrders(orderdata);
+    } catch (error) {
+      console.log("An error occurred:", error);
+    }
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem("sb-ezbyvglcocakzgsptqkw-auth-token");
-    if (token === null) {
-      alert("권한이 없습니다.");
-      location.href = "/";
-    }
-    const tokenEmail = JSON.parse(token as string)["user"]["email"];
-    fetchUserRoleAndEmail(tokenEmail).then((data) => {
-      if (data === null) {
-        alert("권한이 없습니다.");
-        location.href = "/";
+    const checkUserAuthorization = async () => {
+      const { data: session } = await supabase.auth.getSession();
+
+      if (!session) {
+        alert("로그인이 필요합니다");
+        window.location.href = "/";
       }
-    });
-    const fetchData = async () => {
-      try {
-        const orderdata = await getOrderQueue();
-        setOrders(orderdata);
-      } catch (error) {
-        console.log("An error occurred:", error);
-      };
-    }
-    fetchData();
+
+
+      const userId = (session as any).users.id; 
+
+      const { data: userRole } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+      if (userRole && userRole.role !== 1) {
+        alert("권한이 없습니다.");
+        window.location.href = "/";
+        return;
+      }
+
+      fetchData();
+    };
+
+    checkUserAuthorization();
   }, []);
 
   return (
