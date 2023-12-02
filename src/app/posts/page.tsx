@@ -87,7 +87,7 @@ const Posts = async ({
         <h1 className="text-gray-400 my-2">PostList</h1>
         <p className="hidden">{JSON.stringify(searchParams)}</p>
       </div>
-      {!data ? (
+      {!data || data.length === 0 ? (
         <>
           <p>{err}</p>
           <NoPost />
