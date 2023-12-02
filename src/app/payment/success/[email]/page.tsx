@@ -54,7 +54,7 @@ const DownloadData = async ({ params }: { params: { email: string } }) => {
                     href={url}
                     target="_blank"
                   >
-                    <FontAwesomeIcon icon={faFileArrowDown} /> {index + 1}번 자료입니다. 
+                    <FontAwesomeIcon icon={faFileArrowDown} /> {index + 1}번 자료입니다. ({index + 1}/{data.urls.length}) 
                   </a>
                 </li>
               );
