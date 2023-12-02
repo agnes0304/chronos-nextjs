@@ -12,14 +12,18 @@ OCR(네이버 클로바)로 이미지를 스캔한 뒤, 파이썬의 한국어 �
 AWS Simple email service를 사용하여 판매자와 구매자 간의 상호 작용을 보완하였습니다. 
 
 
+</br></br>
 
 
-## chronos-nextjs
+
+## About project
 - 👤 개인 / 2023년 10월 ~ (진행중)
+   - CSS 수정 및 SEO 작업 
 - 배포링크: <a href="https://chronos.jiwoo.best">필기깎는화석</a>
-</br>
 
-## TOOLs
+</br></br>
+
+## Tools
 
 <h4 align="center">Client</h4>
 <div align="center">
@@ -59,6 +63,6 @@ AWS Simple email service를 사용하여 판매자와 구매자 간의 상호 �
 
 </div>
 
-</br>
+</br></br>
 
 ## Overview
