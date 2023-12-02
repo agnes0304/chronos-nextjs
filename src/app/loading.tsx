@@ -2,7 +2,7 @@
 import styled, { keyframes } from "styled-components";
 
 interface WaveLetterProps {
-  delay: number;
+  $delay: number;
 }
 
 // wave animation
@@ -17,7 +17,7 @@ const waveAnimation = keyframes`
 
 const WaveLetter = styled.p<WaveLetterProps>`
   animation: ${waveAnimation} 1s ease-in-out infinite;
-  animation-delay: ${(props) => props.delay}s;
+  animation-delay: ${(props) => props.$delay}s;
 `;
 
 export default function Loading() {
@@ -28,7 +28,7 @@ export default function Loading() {
           (letter, index) => (
             <WaveLetter
               key={index}
-              delay={index * 0.1}
+              $delay={index * 0.1}
               className="text-md font-medium text-gray-400"
             >
               {letter}

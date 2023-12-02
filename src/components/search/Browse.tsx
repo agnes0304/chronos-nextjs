@@ -2,7 +2,7 @@
 import { FC, useState, useEffect } from "react";
 import SearchInput from "./SearchInput";
 import Tags from "./Tags";
-import { mainTags } from "../../data/dummy";
+import { mainTags } from "../../data/mainTags";
 
 const Browse: FC = () => {
   const [tags, setTags] = useState<string[]>([]);
