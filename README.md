@@ -20,6 +20,7 @@ AWS Simple email service를 사용하여 판매자와 구매자 간의 상호 �
 - 👤 개인 / 2023년 10월 ~ (진행중)
    - CSS 수정 및 SEO 작업 
 - 배포링크: <a href="https://chronos.jiwoo.best">필기깎는화석</a>
+- 서버 레포지토리: <a href="https://github.com/agnes0304/chronos-server">chronos-server</a>
 
 </br></br>
 
