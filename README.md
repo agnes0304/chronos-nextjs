@@ -1,6 +1,8 @@
 # Chronos | 필기깎는화석
 
-
+<div align="center">
+<img width="400" alt="chronos main page" src="https://github.com/agnes0304/chronos-nextjs/assets/86249667/61825b4e-5350-4dc1-ae4a-94624fd4ed1f">
+</div>
 
 ## About "Chronos"
 
