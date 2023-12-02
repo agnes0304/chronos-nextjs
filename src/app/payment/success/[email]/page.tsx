@@ -6,7 +6,6 @@ type s3Url = {
   urls: string[];
 };
 
-// test url: http://localhost:3000/payment/success/test
 
 async function getOrder(email: string) {
   try {
@@ -18,6 +17,7 @@ async function getOrder(email: string) {
     return data;
   } catch (error) {
     console.log("getOrder 내부 에러: ", error);
+    throw error;
   }
 }
 
@@ -32,6 +32,7 @@ const DownloadData = async ({ params }: { params: { email: string } }) => {
     }
   } catch (error) {
     console.log("An error occurred:", error);
+    throw error;
   }
 
   return (
