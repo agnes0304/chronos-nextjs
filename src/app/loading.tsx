@@ -21,21 +21,20 @@ const WaveLetter = styled.p<WaveLetterProps>`
 `;
 
 export default function Loading() {
-  const dotCount = 5;
-  const dots = Array.from({ length: dotCount }, () => ".");
-
   return (
     <div className="flex justify-center items-center">
       <div className="flex gap-1">
-        {dots.map((dot, index) => (
-          <WaveLetter
-            key={index}
-            delay={index * 0.1}
-            className="text-md font-medium text-gray-400"
-          >
-            {dot}
-          </WaveLetter>
-        ))}
+        {["L", "o", "a", "d", "i", "n", "g", ".", ".", "."].map(
+          (letter, index) => (
+            <WaveLetter
+              key={index}
+              delay={index * 0.1}
+              className="text-md font-medium text-gray-400"
+            >
+              {letter}
+            </WaveLetter>
+          )
+        )}
       </div>
     </div>
   );
