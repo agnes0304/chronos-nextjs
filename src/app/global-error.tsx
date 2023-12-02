@@ -10,7 +10,7 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <div className="flex flex-col w-[100vw] h-[100vh] justify-center items-center">
+        <div className="flex flex-col w-[100vw] h-[100vh] justify-center items-center gap-4">
           <h2 className="text-xl font-semibold text-gray-600">
             앗! 에러입니다...
           </h2>
