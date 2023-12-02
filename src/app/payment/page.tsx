@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import PayActions from "@/components/payment/PayActions";
+import Kakaobadge from "@/components/payment/Kakaobadge";
+import Tossbadge from "@/components/payment/Tossbadge";
 
-// test url: http://localhost:3000/payment?product=test
 const Payment = ({
   searchParams,
 }: {
@@ -135,13 +136,27 @@ const Payment = ({
               htmlFor="confirm"
               className="text-sm font-normal text-gray-500"
             >
-              이메일의 오타 여부를 확인해주세요.
+              이메일 오타 여부를 확인했습니다.
             </label>
           </div>
         </form>
-        <div>
+        <div className="flex flex-col gap-1">
           <p className="text-sm font-normal text-gray-500">
-            송금은 <span className="font-medium text-rose-500">모바일</span>에서 진행해주세요!
+            송금은 <span className="font-medium text-rose-500">모바일</span>에서
+            진행해주세요!
+          </p>
+          <div className="flex">
+            <Kakaobadge />{" "}
+            <p className="text-sm font-normal text-gray-500">혹은</p>{" "}
+            <Tossbadge />
+            <p className="text-sm font-normal text-gray-500">
+              에는 꼭{" "}
+              <span className="font-medium text-rose-500">@제외 주소</span>
+              를 적어주세요!
+            </p>
+          </div>
+          <p className="text-sm font-normal text-gray-500">
+            ※ 예시: sample@naver.com → &apos;sample&apos;
           </p>
           <p className="text-sm font-normal text-gray-500">
             버튼 클릭 시 이동하는 주소를 복사해서 사용하실 수 있습니다.

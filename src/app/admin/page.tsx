@@ -55,8 +55,8 @@ const AdminPage = () => {
   return (
     <>
       <div className="flex flex-col w-[90vw] justify-center items-center gap-4">
-        <h1 className="text-2xl font-bold text-gray-700">
-          {loginedUserData?.email ? loginedUserData.email : "없다..어디갔냐"}
+        <h1 className="text-2xl font-bold text-gray-600">
+          {loginedUserData?.email ? `${loginedUserData.email}님` : "관리자 페이지"}
         </h1>
         {isLogin ? (
           <button
