@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import AdminConfirmBtn from "@/components/admin/AdminConfirmBtn";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { supabase } from "@/components/admin/SupaClient";
