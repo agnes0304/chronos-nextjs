@@ -3,6 +3,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TextEditor from "@/components/editor/TextEditor";
+import { checkUserAuthorization } from "@/components/admin/CheckAuth";
 
 type PriceOptionType = { option: [string, number] };
 
@@ -28,24 +29,27 @@ const AdminPostEditPage = () => {
   const [bloglink, setBloglink] = useState<string>("");
   const [isPaid, setIsPaid] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
-  //   'priceOptions': [{'option': ['올인원 한국사 연표 필기노트', 18000]}, {'option': ['free', 0]}, {'option': ['test', 100]}]
   const [priceOption, setPriceOption] = useState<PriceOptionType[]>([]);
 
   const params = useParams();
 
   useEffect(() => {
-    if (typeof params.id === "string") {
-      getPost(params.id).then((res) => {
-        setTitle(res.title);
-        setBody(res.body);
-        setFilename(res.filename);
-        setFilenameEx(res.filename_ex);
-        setBloglink(res.bloglink);
-        setIsPaid(res.isPaid);
-        setPrice(res.price);
-        setPriceOption(res.priceOptions);
-      });
-    }
+    const authorizeAndFetch = async () => {
+      const isAuthorized = await checkUserAuthorization();
+      if (isAuthorized && typeof params.id === "string") {
+        getPost(params.id).then((res) => {
+          setTitle(res.title);
+          setBody(res.body);
+          setFilename(res.filename);
+          setFilenameEx(res.filename_ex);
+          setBloglink(res.bloglink);
+          setIsPaid(res.isPaid);
+          setPrice(res.price);
+          setPriceOption(res.priceOptions);
+        });
+      }
+    };
+    authorizeAndFetch();
   }, []);
 
   const handleBodyChange = (content: any) => {
