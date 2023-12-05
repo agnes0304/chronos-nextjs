@@ -56,7 +56,7 @@ const AdminPostEditPage = () => {
     <div className="flex flex-col w-[90vw] justify-start items-center">
       <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
         <h1 className="text-xl font-semibold text-gray-600">POST EDIT</h1>
-        <form className="flex flex-col w-full gap-4" onSubmit={updatePostHandler}>
+        <form className="flex flex-col w-full gap-4" onSubmit={updatePostHandler} action="/admin/posts">
           <label className="text-sm text-gray-600">TITLE</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
