@@ -57,21 +57,21 @@ const AdminPostPage = () => {
         <table className="w-full">
           <thead className="text-white text-sm font-normal uppercase bg-indigo-500">
             <tr>
-              <td className="py-1 bpost text-center p-4">ID</td>
-              <td className="py-1 bpost text-center p-4">제목</td>
-              <td className="py-1 bpost text-center p-4">유료 여부</td>
+              <td className="py-1 text-center p-4">ID</td>
+              <td className="py-1 text-center p-4">제목</td>
+              <td className="py-1 text-center p-4">유료 여부</td>
             </tr>
           </thead>
           <tbody className="bg-white text-gray-500">
             {posts.length === 0 && (
-              <tr className="text-center bpost-b">
-                <td className="py-1">.</td>
-                <td className="py-1">.</td>
-                <td className="py-1">.</td>
+              <tr className="text-center">
+                <td className="py-1">표시 가능한</td>
+                <td className="py-1">자료가</td>
+                <td className="py-1">없습니다.</td>
               </tr>
             )}
             {posts.map((post) => (
-              <tr key={post.id} className="text-center bpost-b">
+              <tr key={post.id} className="text-center">
                 <td className="py-1">{post.id}</td>
                 <Link href={`/admin/posts/${post.id}`}><td className="py-1">{post.title}</td></Link>
                 <td className="py-1">{post.isPaid}</td>
