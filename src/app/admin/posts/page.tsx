@@ -89,15 +89,18 @@ const AdminPostPage = () => {
               </tr>
             )}
             {posts.map((post) => (
-              <Link key={post.id} href={`/admin/posts/${post.id}`}>
-                <tr className="text-center hover:bg-indigo-100 hover:text-gray-600 hover:font-medium active:bg-indigo-200 active:text-gray-700 active:font-medium">
+              <tr
+                key={post.id}
+                className="text-center hover:bg-indigo-100 hover:text-gray-600 hover:font-medium active:bg-indigo-200 active:text-gray-700 active:font-medium"
+              >
+                <Link href={`/admin/posts/${post.id}`}>
                   <td className="py-1">{post.id}</td>
                   <td className="py-1">{post.title}</td>
                   <td className="py-1">
                     {post.isPaid ? `${post.price}원` : "X"}
                   </td>
-                </tr>
-              </Link>
+                </Link>
+              </tr>
             ))}
           </tbody>
         </table>
