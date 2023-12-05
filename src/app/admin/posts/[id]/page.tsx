@@ -123,7 +123,7 @@ const AdminPostEditPage = () => {
           <div className="flex gap-2 items-center">
             <label className="text-sm text-gray-600">ISPAID</label>
             <input
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="p-2 border border-gray-300 rounded-md"
               type="checkbox"
               checked={isPaid}
               onChange={(e) => setIsPaid(e.target.checked)}
@@ -131,10 +131,18 @@ const AdminPostEditPage = () => {
           </div>
           <label className="text-sm text-gray-600">PRICE</label>
           <select
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className={`w-full p-2 border rounded-md ${
+              isPaid
+                ? "border-gray-300 bg-white"
+                : "border-gray-200 bg-gray-100 text-gray-500"
+            }`}
             value={isPaid ? price : 0}
             disabled={!isPaid}
-            onChange={(e) => setPrice(parseInt(e.target.value))}
+            onChange={(e) => {
+              const selectedOption = parseInt(e.target.value);
+              setPrice(selectedOption);
+              setIsPaid(selectedOption !== 0);
+            }}
           >
             {priceOption.map((optionItem, index) => {
               return (
