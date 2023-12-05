@@ -27,8 +27,8 @@ async function getPost(param: string) {
 
 const AdminPostEditPage = () => {
   const [post, setPost] = useState<Post>({} as Post);
-
   const params = useParams();
+
   useEffect(() => {
     if (typeof params.id === "string") {
       getPost(params.id).then((res) => {
@@ -37,6 +37,20 @@ const AdminPostEditPage = () => {
       });
     }
   }, []);
+
+  const updatePostHandler = async () => {
+    try {
+      const res = await fetch(`${baseUrl}/posts/${params.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(post),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      alert("포스트 수정에 실패했습니다.");
+    }
+  };
 
   return (
     <div className="flex flex-col w-[90vw] justify-start items-center">
@@ -50,6 +64,7 @@ const AdminPostEditPage = () => {
             defaultValue={post.title}
           />
           <label className="text-sm text-gray-600">BODY</label>
+          {/* Editor 넣고 싶어용 */}
           <textarea
             className="w-full p-2 border border-gray-300 rounded-md"
             defaultValue={post.body}
@@ -78,12 +93,14 @@ const AdminPostEditPage = () => {
             type="text"
             defaultValue={post.createdAt}
           />
-          <label className="text-sm text-gray-600">ISPAID</label>
-          <input
-            className="w-full p-2 border border-gray-300 rounded-md"
-            type="checkbox"
-            defaultChecked={post.isPaid}
-          />
+          <div className="flex gap-2 items-center">
+            <label className="text-sm text-gray-600">ISPAID</label>
+            <input
+              className="w-full p-2 border border-gray-300 rounded-md"
+              type="checkbox"
+              defaultChecked={post.isPaid}
+            />
+          </div>
           <label className="text-sm text-gray-600">PRICE</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
@@ -91,11 +108,18 @@ const AdminPostEditPage = () => {
             defaultValue={post.price}
           />
           <div className="flex flex-row justify-end gap-4">
-            <button className="px-4 py-2 bg-gray-300 rounded-md">
-              CANCEL
+            <button
+              className="bg-gray-300 text-black hover:bg-gray-400 active:bg-gray-500 h-[42px] w-[60px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
+              type="button"
+              onClick={() => (window.location.href = "/admin/posts")}
+            >
+              취소
             </button>
-            <button className="px-4 py-2 bg-indigo-500 rounded-md">
-              SAVE
+            <button
+              className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
+              type="button"
+            >
+              저장하기
             </button>
           </div>
         </form>
