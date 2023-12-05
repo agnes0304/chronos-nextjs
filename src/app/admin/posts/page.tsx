@@ -53,15 +53,15 @@ const AdminPostPage = () => {
   return (
     <div className="flex flex-col w-[90vw] justify-start items-center">
       <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
-        <div className="flex justify-between">
+        <div className="flex w-full justify-between items-center">
           <h1 className="text-xl font-semibold text-gray-600">POSTLIST</h1>
-          <div className="flex gap-1">
+          <div className="flex gap-2">
             <button
               className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
               type="button"
               onClick={() => (window.location.href = "/admin/posts/create")}
             >
-              포스트 쓰기
+              포스트 생성
             </button>
             <button
               className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
