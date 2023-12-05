@@ -3,18 +3,6 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type Post = {
-  id: number;
-  title: string;
-  body: string;
-  filename: string;
-  filename_ex: string;
-  bloglink: string;
-  createdAt: string;
-  isPaid: boolean;
-  price: number;
-};
-
 async function getPost(param: string) {
   try {
     const res = await fetch(`${baseUrl}/posts/${param}`);
@@ -26,28 +14,50 @@ async function getPost(param: string) {
 }
 
 const AdminPostEditPage = () => {
-  const [post, setPost] = useState<Post>({} as Post);
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [filename, setFilename] = useState<string>("");
+  const [filenameEx, setFilenameEx] = useState<string>("");
+  const [bloglink, setBloglink] = useState<string>("");
+  const [isPaid, setIsPaid] = useState<boolean>(false);
+  const [price, setPrice] = useState<number>(0);
+
   const params = useParams();
 
   useEffect(() => {
     if (typeof params.id === "string") {
       getPost(params.id).then((res) => {
-        console.log(res);
-        setPost(res);
+        setTitle(res.title);
+        setBody(res.body);
+        setFilename(res.filename);
+        setFilenameEx(res.filename_ex);
+        setBloglink(res.bloglink);
+        setIsPaid(res.isPaid);
+        setPrice(res.price);
       });
     }
   }, []);
 
   const updatePostHandler = async () => {
+    const updatedPost = {
+      title: title,
+      body: body,
+      filename: filename,
+      filename_ex: filenameEx,
+      bloglink: bloglink,
+      isPaid: isPaid,
+      price: price,
+    };
+
     try {
       const res = await fetch(`${baseUrl}/posts/${params.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(post),
+        body: JSON.stringify(updatedPost),
       });
       const data = await res.json();
       console.log(data);
-      if (data.message === 0) {
+      if (data.message) {
         alert("포스트 수정에 성공했습니다.");
         window.location.href = "/admin/posts";
       } else {
@@ -67,51 +77,53 @@ const AdminPostEditPage = () => {
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={post.title}
+            defaultValue={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <label className="text-sm text-gray-600">BODY</label>
           {/* Editor 넣고 싶어용 */}
           <textarea
             className="w-full p-2 border border-gray-300 rounded-md"
-            defaultValue={post.body}
+            defaultValue={body}
+            onChange={(e) => setBody(e.target.value)}
           />
           <label className="text-sm text-gray-600">FILENAME</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={post.filename}
+            defaultValue={filename}
+            onChange={(e) => setFilename(e.target.value)}
           />
           <label className="text-sm text-gray-600">FILENAME_EX</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={post.filename_ex}
+            defaultValue={filenameEx}
+            onChange={(e) => setFilenameEx(e.target.value)}
           />
           <label className="text-sm text-gray-600">BLOGLINK</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={post.bloglink}
+            defaultValue={bloglink}
+            onChange={(e) => setBloglink(e.target.value)}
           />
-          <label className="text-sm text-gray-600">CREATEDAT</label>
-          <input
-            className="w-full p-2 border border-gray-300 rounded-md"
-            type="text"
-            defaultValue={post.createdAt}
-          />
+
           <div className="flex gap-2 items-center">
             <label className="text-sm text-gray-600">ISPAID</label>
             <input
               className="w-full p-2 border border-gray-300 rounded-md"
               type="checkbox"
-              defaultChecked={post.isPaid}
+              defaultChecked={isPaid}
+              onChange={(e) => setIsPaid(e.target.checked)}
             />
           </div>
           <label className="text-sm text-gray-600">PRICE</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
-            type="text"
-            defaultValue={post.price}
+            type="number"
+            defaultValue={price}
+            onChange={(e) => setPrice(e.target.valueAsNumber)}
           />
           <div className="flex flex-row justify-end gap-4">
             <button
