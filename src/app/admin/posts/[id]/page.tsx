@@ -10,7 +10,6 @@ type PriceOptionType = { option: [string, number] };
 async function getPost(param: string) {
   try {
     const res = await fetch(`${baseUrl}/posts/edit/${param}`);
-    // price를 다르게 가지고와야함
     const data = await res.json();
     if (data.length === 0) {
       alert("포스트를 찾을 수 없습니다.");

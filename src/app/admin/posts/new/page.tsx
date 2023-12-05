@@ -3,16 +3,16 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TextEditor from "@/components/editor/TextEditor";
+import { checkUserAuthorization } from "@/components/admin/CheckAuth";
 
 type PriceOptionType = { option: [string, number] };
 
-async function getPost(param: string) {
+async function getPriceOption() {
   try {
-    const res = await fetch(`${baseUrl}/posts/edit/${param}`);
-    // price를 다르게 가지고와야함
+    const res = await fetch(`${baseUrl}/posts/create`);
     const data = await res.json();
     if (data.length === 0) {
-      alert("포스트를 찾을 수 없습니다.");
+      alert("가격 옵션이 없습니다. 상품을 먼저 생성해주세요");
     }
     return data;
   } catch (error) {
@@ -33,26 +33,23 @@ const AdminNewPostPage = () => {
   const params = useParams();
 
   useEffect(() => {
-    if (typeof params.id === "string") {
-      getPost(params.id).then((res) => {
-        setTitle(res.title);
-        setBody(res.body);
-        setFilename(res.filename);
-        setFilenameEx(res.filename_ex);
-        setBloglink(res.bloglink);
-        setIsPaid(res.isPaid);
-        setPrice(res.price);
-        setPriceOption(res.priceOptions);
-      });
-    }
+    const authorizeAndFetchPrice = async () => {
+      const isAuthorized = await checkUserAuthorization();
+      if (isAuthorized) {
+        getPriceOption().then((res) => {
+          setPriceOption(res);
+        });
+      }
+    };
+    authorizeAndFetchPrice();
   }, []);
 
   const handleBodyChange = (content: any) => {
     setBody(content);
   };
 
-  const updatePostHandler = async () => {
-    const updatedPost = {
+  const createPostHandler = async () => {
+    const newPost = {
       title: title,
       body: body,
       filename: filename,
@@ -63,10 +60,10 @@ const AdminNewPostPage = () => {
     };
 
     try {
-      const res = await fetch(`${baseUrl}/posts/${params.id}`, {
-        method: "PUT",
+      const res = await fetch(`${baseUrl}/posts/create`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedPost),
+        body: JSON.stringify(newPost),
       });
       const data = await res.json();
       console.log(data);
@@ -90,33 +87,37 @@ const AdminNewPostPage = () => {
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={title}
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="포스트 제목을 입력하세요"
           />
           <label className="text-sm text-gray-600">BODY</label>
           <div>
-            <TextEditor onChange={handleBodyChange} defaultValue={body} />
+            <TextEditor onChange={handleBodyChange} />
           </div>
           <label className="text-sm text-gray-600">FILENAME</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={filename}
+            value={filename}
+            placeholder="S3에 있는 파일명을 확장자 제외하고 입력하세요"
             onChange={(e) => setFilename(e.target.value)}
           />
           <label className="text-sm text-gray-600">FILENAME_EX</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={filenameEx}
+            value={filenameEx}
             onChange={(e) => setFilenameEx(e.target.value)}
+            placeholder="S3에 있는 파일명을 확장자 포함 입력하세요"
           />
           <label className="text-sm text-gray-600">BLOGLINK</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
             type="text"
-            defaultValue={bloglink}
+            value={bloglink}
             onChange={(e) => setBloglink(e.target.value)}
+            placeholder="블로그 포스트 링크를 입력하세요"
           />
 
           <div className="flex gap-2 items-center">
@@ -129,6 +130,7 @@ const AdminNewPostPage = () => {
             />
           </div>
           <label className="text-sm text-gray-600">PRICE</label>
+          <p className="text-sm text-gray-500 font-normal">선택하려는 가격이 없다면 <span className="font-medium text-rose-500">해당 가격의 상품을 먼저 등록</span>해야 합니다.</p>
           <select
             className={`w-full p-2 border rounded-md ${
               isPaid
@@ -162,7 +164,7 @@ const AdminNewPostPage = () => {
             <button
               className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
               type="button"
-              onClick={() => updatePostHandler()}
+              onClick={() => createPostHandler()}
             >
               저장하기
             </button>
