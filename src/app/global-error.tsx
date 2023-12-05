@@ -18,7 +18,7 @@ export default function GlobalError({
             className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
             onClick={() => reset()}
           >
-            다시 시도
+            홈으로
           </button>
         </div>
       </body>

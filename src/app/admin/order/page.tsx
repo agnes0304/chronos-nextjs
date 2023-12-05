@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import AdminConfirmBtn from "@/components/admin/AdminConfirmBtn";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { supabase } from "@/components/admin/SupaClient";
+import { checkUserAuthorization } from "@/components/admin/CheckAuth";
 
 type Order = {
   id: number;
@@ -72,43 +73,14 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    const checkUserAuthorization = async () => {
-      const { data: session } = await supabase.auth.getSession();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      // 확인했음 -> url로 직접 접근한 경우 방지
-      if (session.session === null) {
-        alert("로그인이 필요합니다");
-        window.location.href = "/admin";
+    const authorizeAndFetch = async () => {
+      const isAuthorized = await checkUserAuthorization();
+      if (isAuthorized) {
+        fetchData();
       }
-
-      const userId = user?.id;
-
-      const { data: userRole, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", userId)
-        .single();
-        // 무조건 1개의 row는 와야 정상임. 
-
-      if (error) {
-        console.log("supabase 에러: ", error);
-        return;
-      }
-
-      // 그냥 가입해본 유저가 들어온 경우(role = 0)
-      if (!userRole || userRole.role !== 1 ) {
-        alert("권한이 없습니다.");
-        window.location.href = "/";
-        return;
-      }
-
-      fetchData();
     };
 
-    checkUserAuthorization();
+    authorizeAndFetch();
   }, []);
 
   return (
