@@ -68,7 +68,6 @@ export default function TextEditor({onChange, defaultValue} : TextEditorProps) {
         modules={modules}
         formats={formats}
         theme="snow"
-        // style={{ height: '100px' }}
       />
     </div>
   );

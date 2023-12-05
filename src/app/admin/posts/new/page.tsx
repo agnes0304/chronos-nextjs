@@ -42,7 +42,6 @@ const AdminNewPostPage = () => {
       }
     };
     authorizeAndFetchPrice();
-
   }, []);
 
   const handleBodyChange = (content: any) => {
