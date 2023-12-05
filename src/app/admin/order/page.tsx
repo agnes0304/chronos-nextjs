@@ -85,9 +85,28 @@ const OrderPage = () => {
   return (
     <div className="flex flex-col w-[90vw] justify-start items-center">
       <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
-        <h1 className="text-xl font-semibold text-gray-600">
-          입금확인 요청 내역
-        </h1>
+        <div className="flex w-full justify-between items-center">
+          <h1 className="text-xl font-semibold text-gray-600">
+            입금 확인 요청 리스트
+          </h1>
+          <div className="flex gap-2">
+            <button
+              className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
+              type="button"
+              onClick={() => (window.location.href = "/admin/posts")}
+            >
+              포스트 관리
+            </button>
+            <button
+              className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
+              type="button"
+              onClick={() => (window.location.href = "/admin")}
+            >
+              관리자 메인
+            </button>
+          </div>
+        </div>
+
         <table className="w-full">
           <thead className="text-white text-sm font-normal uppercase bg-indigo-500">
             <tr>
