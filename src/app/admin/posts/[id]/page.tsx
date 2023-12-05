@@ -56,7 +56,7 @@ const AdminPostEditPage = () => {
     <div className="flex flex-col w-[90vw] justify-start items-center">
       <div className="flex flex-col w-[90vw] justify-center items-start gap-6 sm:w-4/5 md:w-2/3">
         <h1 className="text-xl font-semibold text-gray-600">POST EDIT</h1>
-        <form className="flex flex-col w-full gap-4">
+        <form className="flex flex-col w-full gap-4" onSubmit={updatePostHandler}>
           <label className="text-sm text-gray-600">TITLE</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
@@ -117,7 +117,7 @@ const AdminPostEditPage = () => {
             </button>
             <button
               className="bg-indigo-300 text-white hover:bg-indigo-400 active:bg-indigo-400 h-[42px] w-[120px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
-              type="button"
+              type="submit"
             >
               저장하기
             </button>
