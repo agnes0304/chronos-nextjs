@@ -3,5 +3,5 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="mt-[66px]">{children}</div>;
+  return <div className="mt-[66px] mb-[100px]">{children}</div>;
 }

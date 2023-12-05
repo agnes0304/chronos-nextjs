@@ -2,6 +2,7 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import TextEditor from "@/components/editor/TextEditor";
 
 async function getPost(param: string) {
   try {
@@ -37,6 +38,10 @@ const AdminPostEditPage = () => {
       });
     }
   }, []);
+
+  const handleBodyChange = (content: any) => {
+    setBody(content);
+  };
 
   const updatePostHandler = async () => {
     const updatedPost = {
@@ -81,12 +86,9 @@ const AdminPostEditPage = () => {
             onChange={(e) => setTitle(e.target.value)}
           />
           <label className="text-sm text-gray-600">BODY</label>
-          {/* Editor 넣고 싶어용 */}
-          <textarea
-            className="w-full p-2 border border-gray-300 rounded-md"
-            defaultValue={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
+          <div>
+            <TextEditor onChange={handleBodyChange} defaultValue={body} />
+          </div>
           <label className="text-sm text-gray-600">FILENAME</label>
           <input
             className="w-full p-2 border border-gray-300 rounded-md"
