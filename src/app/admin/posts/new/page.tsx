@@ -42,6 +42,7 @@ const AdminNewPostPage = () => {
       }
     };
     authorizeAndFetchPrice();
+
   }, []);
 
   const handleBodyChange = (content: any) => {
@@ -52,11 +53,12 @@ const AdminNewPostPage = () => {
     const newPost = {
       title: title,
       body: body,
-      filename: filename,
-      filename_ex: filenameEx,
-      bloglink: bloglink,
+      filename: filename || null,
+      filename_ex: filenameEx || null,
+      bloglink: bloglink || null,
       isPaid: isPaid,
       price: price,
+      createdAt: new Date(),
     };
 
     try {
@@ -130,7 +132,13 @@ const AdminNewPostPage = () => {
             />
           </div>
           <label className="text-sm text-gray-600">PRICE</label>
-          <p className="text-sm text-gray-500 font-normal">선택하려는 가격이 없다면 <span className="font-medium text-rose-500">해당 가격의 상품을 먼저 등록</span>해야 합니다.</p>
+          <p className="text-sm text-gray-500 font-normal">
+            선택하려는 가격이 없다면{" "}
+            <span className="font-medium text-rose-500">
+              해당 가격의 상품을 먼저 등록
+            </span>
+            해야 합니다.
+          </p>
           <select
             className={`w-full p-2 border rounded-md ${
               isPaid

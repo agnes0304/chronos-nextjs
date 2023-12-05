@@ -64,6 +64,7 @@ const AdminPostEditPage = () => {
       bloglink: bloglink,
       isPaid: isPaid,
       price: price,
+      createdAt: new Date(),
     };
 
     try {
