@@ -82,20 +82,20 @@ const AdminPostPage = () => {
           </thead>
           <tbody className="bg-white text-gray-500">
             {posts.length === 0 && (
-              <tr className="text-center">
+              <tr className="text-center bg-gray-200">
                 <td className="py-1">표시 가능한</td>
                 <td className="py-1">자료가</td>
                 <td className="py-1">없습니다.</td>
               </tr>
             )}
             {posts.map((post) => (
-              <tr key={post.id} className="text-center hover:bg-indigo-200 hover:text-gray-600 hover:font-medium active:bg-indigo-300 active:text-gray-700 active:font-medium">
-                <td className="py-1">{post.id}</td>
-                <Link href={`/admin/posts/${post.id}`}>
+              <Link key={post.id} href={`/admin/posts/${post.id}`}>
+                <tr className="text-center hover:bg-indigo-100 hover:text-gray-600 hover:font-medium active:bg-indigo-200 active:text-gray-700 active:font-medium">
+                  <td className="py-1">{post.id}</td>
                   <td className="py-1">{post.title}</td>
-                </Link>
-                <td className="py-1">{post.price}</td>
-              </tr>
+                  <td className="py-1">{post.price}</td>
+                </tr>
+              </Link>
             ))}
           </tbody>
         </table>
