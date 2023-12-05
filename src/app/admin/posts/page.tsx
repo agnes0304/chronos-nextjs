@@ -89,7 +89,7 @@ const AdminPostPage = () => {
               </tr>
             )}
             {posts.map((post) => (
-              <tr key={post.id} className="text-center">
+              <tr key={post.id} className="text-center hover:bg-indigo-200 hover:text-gray-600 hover:font-medium active:bg-indigo-300 active:text-gray-700 active:font-medium">
                 <td className="py-1">{post.id}</td>
                 <Link href={`/admin/posts/${post.id}`}>
                   <td className="py-1">{post.title}</td>
