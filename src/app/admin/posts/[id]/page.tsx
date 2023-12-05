@@ -4,10 +4,16 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TextEditor from "@/components/editor/TextEditor";
 
+type PriceOptionType = { option: [string, number] };
+
 async function getPost(param: string) {
   try {
-    const res = await fetch(`${baseUrl}/posts/${param}`);
+    const res = await fetch(`${baseUrl}/posts/edit/${param}`);
+    // price를 다르게 가지고와야함
     const data = await res.json();
+    if (data.length === 0) {
+      alert("포스트를 찾을 수 없습니다.");
+    }
     return data;
   } catch (error) {
     throw new Error("Failed to fetch data");
@@ -22,6 +28,8 @@ const AdminPostEditPage = () => {
   const [bloglink, setBloglink] = useState<string>("");
   const [isPaid, setIsPaid] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
+  //   'priceOptions': [{'option': ['올인원 한국사 연표 필기노트', 18000]}, {'option': ['free', 0]}, {'option': ['test', 100]}]
+  const [priceOption, setPriceOption] = useState<PriceOptionType[]>([]);
 
   const params = useParams();
 
@@ -35,6 +43,7 @@ const AdminPostEditPage = () => {
         setBloglink(res.bloglink);
         setIsPaid(res.isPaid);
         setPrice(res.price);
+        setPriceOption(res.priceOptions);
       });
     }
   }, []);
@@ -116,17 +125,25 @@ const AdminPostEditPage = () => {
             <input
               className="w-full p-2 border border-gray-300 rounded-md"
               type="checkbox"
-              defaultChecked={isPaid}
+              checked={isPaid}
               onChange={(e) => setIsPaid(e.target.checked)}
             />
           </div>
           <label className="text-sm text-gray-600">PRICE</label>
-          <input
+          <select
             className="w-full p-2 border border-gray-300 rounded-md"
-            type="number"
-            defaultValue={price}
-            onChange={(e) => setPrice(e.target.valueAsNumber)}
-          />
+            value={isPaid ? price : 0}
+            disabled={!isPaid}
+            onChange={(e) => setPrice(parseInt(e.target.value))}
+          >
+            {priceOption.map((optionItem, index) => {
+              return (
+                <option key={index} value={optionItem.option[1]}>
+                  {optionItem.option[1]}
+                </option>
+              );
+            })}
+          </select>
           <div className="flex flex-row justify-end gap-4">
             <button
               className="bg-gray-300 text-black hover:bg-gray-400 active:bg-gray-500 h-[42px] w-[60px] p-2 border rounded-full text-md flex justify-center items-center group px-2 transition-all duration-200 ease-in-out"
