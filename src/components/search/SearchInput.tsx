@@ -10,10 +10,9 @@ import { useRouter } from "next/navigation";
 interface Props {
   selectedTags: string[];
   setClicked: (tags: string[]) => void;
-  handleSubmit: () => void;
 }
 
-const SearchInput: FC<Props> = ({ selectedTags, setClicked, handleSubmit }) => {
+const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -95,7 +94,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked, handleSubmit }) => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex relative w-[90vw] md:w-[50vw] h-[39px] border-solid border-[1px] border-gray-300 rounded-[20px] p-1 px-[4px]">
+      <div className="flex relative w-[90vw] h-[39px] border-solid border-[1px] border-gray-300 rounded-[20px] p-1 px-[4px]">
         <div className="flex gap-[3px] flex-shrink-0">
           {words.map((word, index) => (
             <div
