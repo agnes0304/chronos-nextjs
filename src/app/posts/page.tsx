@@ -101,7 +101,7 @@ const Posts = async ({
               <h2 className="text-lg text-gray-600">
                 {post.title}
               </h2>
-              <p className="text-sm text-gray-500 overflow-auto">{post.body}</p>
+              <div className="text-sm text-gray-500 overflow-hidden mt-2" dangerouslySetInnerHTML={{ __html: post.body }} />
             </Link>
           ))}
         </div>
