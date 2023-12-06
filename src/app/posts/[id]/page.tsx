@@ -107,7 +107,7 @@ const Post = async ({ params }: Props) => {
         />
       </div>
       <div>
-        <p className="text-gray-500">{data.body}</p>
+        <div className="text-gray-500" dangerouslySetInnerHTML={{ __html: data.body }} />
       </div>
       <Actions
         fileName={data.filename_ex}
