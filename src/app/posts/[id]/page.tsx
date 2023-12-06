@@ -2,7 +2,7 @@ import axios from "axios";
 import Image from "next/image";
 import Fdate from "@/components/Fdate";
 import Actions from "@/components/post/Actions";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
@@ -26,15 +26,12 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const id = params.id;
-  const post = await fetch(`https:/${baseUrl}/posts/${id}`).then((res) =>
-    res.json()
-  );
+  const res = await axios.get(`${baseUrl}/posts/${id}`);
+  const post = res.data;
 
   const url = `https://chronos.jiwoo.best/posts/${id}`;
-  const previousImages = (await parent).openGraph?.images || [];
 
   return {
     title: `필기깎는화석 | ${post.title}`,
@@ -50,7 +47,7 @@ export async function generateMetadata(
       description: post.description,
       url: url,
       siteName: "필기깎는화석 | Chronos",
-      images: [`/${post.filename}.webp`, ...previousImages],
+      images: [`/${post.filename}.webp`],
       locale: "en_US",
       type: "website",
     },
@@ -83,7 +80,6 @@ const Post = async ({ params }: Props) => {
   try {
     if (typeof params.id === "string") {
       data = await getPost(params.id);
-      console.log(data);
     } else {
       throw new Error("Failed to fetch data");
     }
