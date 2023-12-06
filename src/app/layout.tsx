@@ -11,12 +11,24 @@ const meta = {
   title: "필기깎는화석 | Chronos",
   description: "역사 연표자료 및 필기노트 검색 서비스",
   url: "https://chronos.jiwoo.best/",
-  img: ['https://chronos.jiwoo.best/ver1.5_OccupationSummary.webp', 'https://chronos.jiwoo.best/fossilLogo.png'],
+  img: [
+    "https://chronos.jiwoo.best/ver1.5_OccupationSummary.webp",
+    "https://chronos.jiwoo.best/fossilLogo.png",
+  ],
 };
+
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const naverSiteVerification = process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   title: meta.title,
-  description: meta.description,  
+  description: meta.description,
+  verification: {
+    google: googleSiteVerification,
+    other: {
+      'naver-site-verification': naverSiteVerification || "",
+    }
+  },
   openGraph: {
     title: meta.title,
     description: meta.description,
