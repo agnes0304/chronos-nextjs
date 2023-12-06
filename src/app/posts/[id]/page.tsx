@@ -34,7 +34,6 @@ export async function generateMetadata(
   );
 
   const url = `https://chronos.jiwoo.best/posts/${id}`;
-
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
