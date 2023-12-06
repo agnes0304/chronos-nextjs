@@ -115,6 +115,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
           <input
             className="flex-grow bg-transparent text-sm text-gray-400 overflow-hidden focus:outline-none"
             type="text"
+            autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {

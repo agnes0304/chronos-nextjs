@@ -6,7 +6,6 @@ import Browse from "@/components/search/Browse";
 import Link from "next/link";
 import NoPost from "@/components/post/NoPost";
 
-
 type Post = {
   id: number;
   title: string;
@@ -16,7 +15,6 @@ type Post = {
   bloglink: string;
   createdAt: string;
 };
-
 
 function generateQueryString(params: {
   [key: string]: string | string[] | undefined;
@@ -59,7 +57,7 @@ const Posts = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   let data;
-  let err:any;
+  let err: any;
   console.log("try 바깥 searchParams:", searchParams);
   try {
     console.log("Posts 내부 searchParams:", searchParams);
@@ -93,17 +91,17 @@ const Posts = async ({
           <NoPost />
         </>
       ) : (
-        <div className="grid gap-2 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
+        <div className="grid gap-4 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
           {data.map((post: any) => (
             <Link
               href={`/posts/${post.id}`}
               key={post.id}
-              className="flex flex-col max-h-32 w-full justify-between border rounded border-gray-300 p-2"
+              className="flex flex-col max-h-32 w-full justify-between border rounded-xl bg-white border-gray-300 p-3 transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md hover:bg-indigo-50 hover:z-20"
             >
-              <h2 className="text-lg text-gray-400 hover:text-gray-700">
+              <h2 className="text-lg text-gray-600">
                 {post.title}
               </h2>
-              <p className="text-sm text-gray-400 overflow-auto">{post.body}</p>
+              <p className="text-sm text-gray-500 overflow-auto">{post.body}</p>
             </Link>
           ))}
         </div>
