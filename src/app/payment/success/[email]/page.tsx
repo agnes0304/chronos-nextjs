@@ -6,16 +6,21 @@ type s3Url = {
   urls: string[];
 };
 
-
 async function getOrder(email: string) {
   try {
     const res = await fetch(`${baseUrl}/orders/${email}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", 'Cache-Control': 'no-store' },
       cache: 'no-store',
-    });
+    },
+    
+    );
     const data = await res.json();
-    return data;
+
+    if (data[1]?.message === "success") {
+      return data[0];
+    }
+    return { urls: [] };
   } catch (error) {
     console.log("getOrder 내부 에러: ", error);
     throw error;
@@ -43,25 +48,33 @@ const DownloadData = async ({ params }: { params: { email: string } }) => {
           구매하신 자료입니다.
         </h1>
         <p className="text-sm text-gray-500">
-          아래 링크를 <span className="text-rose-500 font-semibold">전부</span> 눌러 다운로드 받아주세요.
+          아래 링크를 <span className="text-rose-500 font-semibold">전부</span>{" "}
+          눌러 다운로드 받아주세요.
         </p>
         <div>
           <ul className="text-gray-500 font-base text-md">
-            {data.urls.map((url, index) => {
-              return (
-                <li key={index} className="mb-1 w-full">
-                  <a
-                    className="text-indigo-400 hover:text-indigo-600 w-full"
-                    href={url}
-                    target="_blank"
-                  >
-                    <FontAwesomeIcon icon={faFileArrowDown} /> {index + 1}번 자료입니다. ({index + 1}/{data.urls.length}) 
-                  </a>
-                </li>
-              );
-            }
+            {/* urls가 비어있으면 만료되었습니다. 메세지 띄우기*/}
+            {data.urls.length === 0 ? (
+              <>
+              <li className="mb-1 w-full">다운로드 링크가 만료되었습니다.</li>
+              <li className="w-full">궁금하신 점은 chronos9734@gmail.com로 문의주세요</li>
+              </>
+            ) : (
+              data.urls.map((url, index) => {
+                return (
+                  <li key={index} className="mb-1 w-full">
+                    <a
+                      className="text-indigo-400 hover:text-indigo-600 w-full"
+                      href={url}
+                      target="_blank"
+                    >
+                      <FontAwesomeIcon icon={faFileArrowDown} /> {index + 1}번
+                      자료입니다. ({index + 1}/{data.urls.length})
+                    </a>
+                  </li>
+                );
+              })
             )}
-
           </ul>
         </div>
       </div>
