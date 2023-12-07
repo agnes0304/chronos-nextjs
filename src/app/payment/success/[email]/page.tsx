@@ -53,7 +53,7 @@ const DownloadData = async ({ params }: { params: { email: string } }) => {
                     className="text-indigo-400 hover:text-indigo-600 w-full"
                     href={url}
                     target="_blank"
-                  >d
+                  >
                     <FontAwesomeIcon icon={faFileArrowDown} /> {index + 1}번 자료입니다. ({index + 1}/{data.urls.length}) 
                   </a>
                 </li>
