@@ -12,6 +12,7 @@ async function getOrder(email: string) {
     const res = await fetch(`${baseUrl}/orders/${email}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+      cache: 'no-store',
     });
     const data = await res.json();
     return data;
