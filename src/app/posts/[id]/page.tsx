@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 const naverSiteVerification = process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION;
+const googleAdsenseAcount= process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT
 
 type Post = {
   id: number;
@@ -40,6 +41,7 @@ export async function generateMetadata(
       google: googleSiteVerification,
       other: {
         "naver-site-verification": naverSiteVerification || "",
+        "google-adsense-account": googleAdsenseAcount || "",
       },
     },
     openGraph: {
