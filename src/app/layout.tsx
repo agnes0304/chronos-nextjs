@@ -19,7 +19,7 @@ const meta = {
 
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 const naverSiteVerification = process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION;
-const googleAdsenseAcount= process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT
+const googleAdsenseAcount = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT;
 
 export const metadata: Metadata = {
   title: meta.title,
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   verification: {
     google: googleSiteVerification,
     other: {
-      'naver-site-verification': naverSiteVerification || "",
-      'google-adsense-account': googleAdsenseAcount || "",
-    }
+      "naver-site-verification": naverSiteVerification || "",
+      "google-adsense-account": googleAdsenseAcount || "",
+    },
   },
   openGraph: {
     title: meta.title,
