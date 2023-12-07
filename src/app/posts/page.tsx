@@ -19,7 +19,6 @@ type Post = {
 function generateQueryString(params: {
   [key: string]: string | string[] | undefined;
 }) {
-  // key는 'search'이고 value는 '조선어','학회'인 객체가 들어오면 search=조선어+학회로 만들어줌
   const queryString = Object.keys(params)
     .map((key) => {
       const value = params[key];
@@ -38,7 +37,6 @@ async function getAll(query?: {
 }) {
   try {
     const queryString = query ? generateQueryString(query) : "";
-    console.log(`HERE, ${queryString}`);
 
     const res = await axios.get(
       `${baseUrl}/posts${queryString ? `?${queryString}` : ""}`
@@ -58,9 +56,7 @@ const Posts = async ({
 }) => {
   let data;
   let err: any;
-  console.log("try 바깥 searchParams:", searchParams);
   try {
-    console.log("Posts 내부 searchParams:", searchParams);
     data = await getAll(searchParams);
 
     // Removing duplicates
@@ -76,36 +72,41 @@ const Posts = async ({
   }
 
   return (
-    <div className="flex h-[100vh] w-[90vw] flex-col items-start">
-      <Browse />
-      <div className="flex justify-center items-baseline">
-        <div className="text-gray-400 mr-1">
-          <FontAwesomeIcon icon={faList} />
-        </div>
-        <h1 className="text-gray-400 my-2">PostList</h1>
-        <p className="hidden">{JSON.stringify(searchParams)}</p>
+    <div className="flex h-[100vh] w-[90vw] flex-col">
+      <div className="flex flex-col justify-center items-center">
+        <Browse />
       </div>
-      {!data || data.length === 0 ? (
-        <>
-          <p>{err}</p>
-          <NoPost />
-        </>
-      ) : (
-        <div className="grid gap-4 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
-          {data.map((post: any) => (
-            <Link
-              href={`/posts/${post.id}`}
-              key={post.id}
-              className="flex flex-col max-h-32 w-full justify-between border rounded-xl bg-white border-gray-300 p-3 transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md hover:bg-indigo-50 hover:z-20"
-            >
-              <h2 className="text-lg text-gray-600">
-                {post.title}
-              </h2>
-              <div className="text-sm text-gray-500 overflow-hidden mt-2" dangerouslySetInnerHTML={{ __html: post.body }} />
-            </Link>
-          ))}
+      <div className="flex flex-col items-start">
+        <div className="flex justify-center items-baseline">
+          <div className="text-gray-400 mr-1">
+            <FontAwesomeIcon icon={faList} />
+          </div>
+          <h1 className="text-gray-400 my-2">PostList</h1>
+          <p className="hidden">{JSON.stringify(searchParams)}</p>
         </div>
-      )}
+        {!data || data.length === 0 ? (
+          <>
+            <p>{err}</p>
+            <NoPost />
+          </>
+        ) : (
+          <div className="grid gap-4 w-[90vw] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10">
+            {data.map((post: any) => (
+              <Link
+                href={`/posts/${post.id}`}
+                key={post.id}
+                className="flex flex-col max-h-32 w-full justify-between border rounded-xl bg-white border-gray-300 p-3 transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md hover:bg-indigo-50 hover:border-indigo-50 hover:z-20"
+              >
+                <h2 className="text-lg text-gray-600">{post.title}</h2>
+                <div
+                  className="text-sm text-gray-500 overflow-hidden mt-2"
+                  dangerouslySetInnerHTML={{ __html: post.body }}
+                />
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

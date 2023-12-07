@@ -8,12 +8,17 @@ const Browse: FC = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+
   useEffect(() => {
     setTags(mainTags);
   }, []);
+
   return (
     <>
-      <SearchInput setClicked={setSelectedTags} selectedTags={selectedTags} />
+      <SearchInput
+        setClicked={setSelectedTags}
+        selectedTags={selectedTags}
+      />
       <Tags
         tags={tags}
         setClicked={setSelectedTags}

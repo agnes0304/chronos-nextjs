@@ -12,7 +12,10 @@ interface Props {
   setClicked: (tags: string[]) => void;
 }
 
-const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
+const SearchInput: FC<Props> = ({
+  selectedTags,
+  setClicked,
+}) => {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -94,7 +97,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex relative w-[90vw] h-[39px] border-solid border-[1px] border-gray-300 rounded-[20px] p-1 px-[4px]">
+      <div className="flex relative w-[90vw] md:w-[50vw] h-[39px] border-solid border-[1px] border-gray-300 rounded-[20px] p-1 px-[4px]">
         <div className="flex gap-[3px] flex-shrink-0">
           {words.map((word, index) => (
             <div
@@ -113,6 +116,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
         </div>
         <div className="ml-2 flex relative flex-grow">
           <input
+            placeholder="검색어 없이 엔터키 혹은 돋보기를 누르시면 전체 자료를 볼 수 있습니다."
             className="flex-grow bg-transparent text-sm text-gray-400 overflow-hidden focus:outline-none"
             type="text"
             autoFocus
@@ -142,7 +146,7 @@ const SearchInput: FC<Props> = ({ selectedTags, setClicked }) => {
         <div>
           <button
             type="button"
-            className="text-gray-300 text-sm absolute rounded-full right-3 top-2 bg-white bg-opacity-50"
+            className="text-gray-300 text-sm absolute rounded-full right-[4px] top-[3.5px] bg-white bg-opacity-50 w-[30px] h-[30px] color-changing-button"
             onClick={handleSubmit}
           >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
