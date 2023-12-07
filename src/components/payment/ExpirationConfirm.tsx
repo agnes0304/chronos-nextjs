@@ -11,7 +11,7 @@ const ExpirationConfirm = ({ setConfirmChecked }: ExpirationConfirmProps) => {
         </h1>
         <div className="text-sm text-gray-500">
           <p>
-            아래 주의사항을 읽어주세요. 동의 후, 자료 다운로드 페이지로 이동할
+            아래 주의사항을 읽어주세요. 동의하신 뒤, 자료 다운로드 페이지로 이동할
             수 있습니다.
           </p>
           <p>
@@ -20,18 +20,20 @@ const ExpirationConfirm = ({ setConfirmChecked }: ExpirationConfirmProps) => {
           </p>
         </div>
         <div className="w-full">
-          <h2 className="text-md font-medium text-rose-500 ml-3">
+          <h2 className="font-bold text-rose-400 mb-3">
             꼭! 읽어주세요.
           </h2>
-          <ul className="border-[1.5px] border-rose-400 bg-rose-100 rounded-md p-5 w-full">
-            <li className="mb-3 text-gray-800">
-              결제하신 자료는 링크가 유효한{" "}
-              <span className="text-rose-500 font-bold">1회</span>에 한 하여
+          <ul className="w-full font-medium">
+            <li className="mb-3 text-gray-700">
+            🚨 구매하신 자료는 본 내용에 동의 후 가장 처음 이메일을 입력하신 시점부터 {" "}
+              <span className="text-rose-500 font-bold">24시간 내</span>에 언제든지
               다운로드가 가능합니다.
             </li>
-            <li className="mb-3 text-gray-800">
-              자료 다운로드 링크 및 본 페이지 링크의 유효기간은{" "}
-              <span className="text-rose-500 font-bold">1시간</span>입니다.
+            <li className="mb-3 text-gray-700">
+            🚨 4시간 내에 다운로드 링크가 보이지 않으신다면 <span className="font-bold">chronos9734@gmail.com</span>으로 문의해주세요.
+            </li>
+            <li className="mb-3 text-gray-700">
+            😊 입금 확인이 되지 않은 경우에는 이메일 입력 시간이 기록되지 않으니 걱정하지 않으셔도 됩니다.
             </li>
             <li className="text-right">
               <input
@@ -39,7 +41,7 @@ const ExpirationConfirm = ({ setConfirmChecked }: ExpirationConfirmProps) => {
                 type="checkbox"
                 onChange={(e) => setConfirmChecked(e.target.checked)}
               ></input>
-              <label htmlFor="confirm" className="text-gray-500 ml-2">
+              <label htmlFor="confirm" className="text-gray-600 ml-2">
                 위 내용에 동의합니다.
               </label>
             </li>

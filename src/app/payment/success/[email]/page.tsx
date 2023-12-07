@@ -19,7 +19,7 @@ async function getOrder(email: string) {
 
     if (data[1]?.message === "success") {
       return data[0];
-    }
+    } 
     return { urls: [] };
   } catch (error) {
     console.log("getOrder 내부 에러: ", error);
