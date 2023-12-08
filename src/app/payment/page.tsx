@@ -161,6 +161,9 @@ const Payment = ({
           <p className="text-sm font-normal text-gray-500">
             버튼 클릭 시 이동하는 주소를 복사해서 사용하실 수 있습니다.
           </p>
+          <p className="text-sm font-normal text-gray-500">
+            송금 후에는 반드시 여기서 확인 버튼을 눌러주세요!
+          </p>
         </div>
         <PayActions isActive={isActive} submitHandler={submitHandler} />
       </div>
