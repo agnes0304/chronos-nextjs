@@ -97,7 +97,7 @@ const Post = async ({ params }: Props) => {
           <Fdate dateStr={data.createdAt} />
         </div>
       </div>
-      <div className="flex justify-center items-center w-full overflow-hidden object-cover">
+      <div className="flex justify-center items-center w-full object-cover">
         <Image
           src={`/${data.filename}.webp`}
           layout="responsive"
