@@ -39,20 +39,20 @@ main {
 
 html,
 body,
-/* h1,
+h1,
 h2,
 h3,
-h4, */
+h4,
 p {
   margin: 0;
 }
 
-/* ul,
+ul,
 ol {
   margin: 0;
   padding: 0;
   list-style: none;
-} */
+}
 
 ul.absolute {
   scrollbar-width: none; /* For Firefox */
@@ -110,9 +110,9 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-
 @keyframes textColorChange {
-  0%, 100% {
+  0%,
+  100% {
     color: white;
     background-color: rgb(184, 184, 255);
   }
@@ -124,4 +124,31 @@ input[type="number"] {
 
 .color-changing-button {
   animation: textColorChange 2s infinite;
+}
+
+/* 에디터스타일링 용 */
+.ql-editor h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.ql-editor h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.ql-editor h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.ql-editor h4 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.ql-editor ul {
+  list-style: disc;
+}
+.ql-editor ol {
+  list-style: decimal;
+}
+.ql-editor li {
+  margin-left: 1rem;
 }

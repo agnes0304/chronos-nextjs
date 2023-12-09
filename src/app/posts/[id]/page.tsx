@@ -111,7 +111,7 @@ const Post = async ({ params }: Props) => {
       </div>
       <div className="mb-[60px]">
         <div
-          className="text-gray-600"
+          className="text-gray-600 ql-editor"
           dangerouslySetInnerHTML={{ __html: data.body }}
         />
       </div>
