@@ -23,7 +23,7 @@ const Footer = () => {
             alt="naver blog logo"
           />
         </a>
-        <div className="w-[18px] h-[18px] p-2 flex justify-center items-center rounded-full bg-white text-indigo-600">
+        <div className="w-[18px] h-[18px] flex justify-center items-center rounded-full bg-white text-indigo-600">
           <CopyEmailBtn />
         </div>
       </div>
