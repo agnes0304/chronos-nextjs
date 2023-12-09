@@ -39,20 +39,20 @@ main {
 
 html,
 body,
-h1,
+/* h1,
 h2,
 h3,
-h4,
+h4, */
 p {
   margin: 0;
 }
 
-ul,
+/* ul,
 ol {
   margin: 0;
   padding: 0;
   list-style: none;
-}
+} */
 
 ul.absolute {
   scrollbar-width: none; /* For Firefox */
