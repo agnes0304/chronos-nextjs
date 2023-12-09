@@ -1,6 +1,5 @@
 "use client";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TextEditor from "@/components/editor/TextEditor";
 import { checkUserAuthorization } from "@/components/admin/CheckAuth";
@@ -16,6 +15,7 @@ async function getPriceOption() {
     }
     return data;
   } catch (error) {
+    alert("가격 옵션을 불러오는데 실패했습니다.");
     throw new Error("Failed to fetch data");
   }
 }
@@ -30,7 +30,6 @@ const AdminNewPostPage = () => {
   const [price, setPrice] = useState<number>(0);
   const [priceOption, setPriceOption] = useState<PriceOptionType[]>([]);
 
-  const params = useParams();
 
   useEffect(() => {
     const authorizeAndFetchPrice = async () => {
