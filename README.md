@@ -75,7 +75,7 @@ AWS Simple email service를 사용하여 판매자와 구매자 간의 상호 �
    - <a href="https://github.com/agnes0304/chronos-nextjs?tab=readme-ov-file#%EA%B4%80%EB%A6%AC%EC%9E%90-%ED%8E%98%EC%9D%B4%EC%A7%80">데모 영상 바로보기</a>
 - AWS SES를 통해 판매자 ↔ 구매자 간 알림 이메일 전송 자동화
    - <a href="https://velog.io/@inmyhead/AWS-SES으로-유저에게-이메일-전송하기">관련 글 바로가기</a>
-   - <a href="">데모 영상 바로보기</a>
+   - <a href="https://github.com/agnes0304/chronos-nextjs?tab=readme-ov-file#aws-simple-email-service-%ED%99%9C%EC%9A%A9-%EC%98%81%EC%83%81">데모 영상 바로보기</a>
 
 </br>
 
