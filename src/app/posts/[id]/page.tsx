@@ -1,5 +1,5 @@
 import axios from "axios";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Fdate from "@/components/Fdate";
 import Actions from "@/components/post/Actions";
 import type { Metadata } from "next";
@@ -98,13 +98,16 @@ const Post = async ({ params }: Props) => {
       <div className="flex justify-center items-center w-full object-cover">
         <Image
           src={`/${data.filename}.webp`}
-          layout="responsive"
           width={100}
           height={100}
-          objectFit="cover"
-          objectPosition="center"
           alt={`${data.filename} image`}
-        />
+          sizes="100vw"
+          style={{
+            width: "100%",
+            height: "auto",
+            objectFit: "cover",
+            objectPosition: "center"
+          }} />
       </div>
       <div className="mb-[60px]">
         <div

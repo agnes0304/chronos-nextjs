@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 import fossilLogo from "../../public/fossilLogo.png";
 import GotoPaymentSuccess from "./payment/GotoPaymentSuccess";
@@ -15,7 +15,10 @@ const Header = () => {
               width={20}
               height={20}
               alt="naver blog profile"
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
             <p className="text-sm text-gray-400">필기깎는화석</p>
           </div>
         </Link>

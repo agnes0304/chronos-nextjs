@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import naverCircle from "../../public/naverCircle.png";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import CopyEmailBtn from "./CopyEmailBtn";
 
 const Footer = () => {
@@ -22,7 +22,10 @@ const Footer = () => {
             height={20}
             src={naverCircle}
             alt="naver blog logo"
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </a>
         <div className="w-[20px] h-[20px] p-2 flex justify-center items-center rounded-full bg-white text-gray-600">
           <CopyEmailBtn />
