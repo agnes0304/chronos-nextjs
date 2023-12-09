@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 const naverSiteVerification = process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION;
-const googleAdsenseAcount= process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT
+const googleAdsenseAcount = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT;
 
 type Post = {
   id: number;
@@ -25,9 +25,7 @@ type Props = {
   params: { id: string };
 };
 
-export async function generateMetadata(
-  { params }: Props,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = params.id;
   const res = await axios.get(`${baseUrl}/posts/${id}`);
   const post = res.data;
@@ -108,15 +106,20 @@ const Post = async ({ params }: Props) => {
           alt={`${data.filename} image`}
         />
       </div>
-      <div>
-        <div className="text-gray-500" dangerouslySetInnerHTML={{ __html: data.body }} />
+      <div className="mb-[60px]">
+        <div
+          className="text-gray-600"
+          dangerouslySetInnerHTML={{ __html: data.body }}
+        />
       </div>
-      <Actions
-        fileName={data.filename_ex}
-        blogLink={data.bloglink}
-        isPaid={data.isPaid}
-        title={data.title}
-      />
+      <div className="pb-[100px]">
+        <Actions
+          fileName={data.filename_ex}
+          blogLink={data.bloglink}
+          isPaid={data.isPaid}
+          title={data.title}
+        />
+      </div>
     </article>
   );
 };
