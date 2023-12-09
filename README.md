@@ -23,7 +23,7 @@ AWS Simple email service를 사용하여 판매자와 구매자 간의 상호 �
 
 </br></br>
 
-## 사용 언어/프레임워크 및 환경
+## 개발 환경 및 기술 스택
 
 <h4 align="center">Client</h4>
 <div align="center">
