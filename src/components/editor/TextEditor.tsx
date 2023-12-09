@@ -39,7 +39,6 @@ export default function TextEditor({onChange, defaultValue} : TextEditorProps) {
     'bullet',
     'indent',
     'link',
-    'align',
     'color',
     'font',
     'background',
@@ -54,7 +53,6 @@ export default function TextEditor({onChange, defaultValue} : TextEditorProps) {
       ['link'],
       [{ 'color': [] }, { 'background': [] }], 
       [{ 'font': [] }],
-      [{ 'align': [] }],
     ],
   };
 
