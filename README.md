@@ -14,14 +14,14 @@ OCR(네이버 클로바)로 이미지를 스캔한 뒤, 파이썬의 한국어 �
 </br></br>
 
 
-## 프로젝트 정보
+## ℹ️ 프로젝트 정보
 - 👤 개인 / 2023년 10월 ~ (약 1개월)
 - 배포링크: <a href="https://chronos.jiwoo.best">필기깎는화석</a>
 - 서버 레포지토리: <a href="https://github.com/agnes0304/chronos-server">chronos-server</a>
 
 </br></br>
 
-## 개발 환경 및 기술 스택
+## 🛠️ 개발 환경 및 기술 스택
 
 <h4 align="center">Client</h4>
 <div align="center">
@@ -87,15 +87,22 @@ OCR(네이버 클로바)로 이미지를 스캔한 뒤, 파이썬의 한국어 �
 
 </br></br>
 
-## 데모 영상
+## 🎞️ 데모 영상
 
-### 관리자 페이지
+### 🎦 관리자 페이지
 
 ![관리자페이지-min](https://github.com/agnes0304/chronos-nextjs/assets/86249667/1e5ef235-8d61-4f1d-bb9d-258b4138de3b)
 
 </br>
 
-### AWS Simple Email Service 활용 영상
+### 🎦 AWS Simple Email Service 활용 영상
 
-![주문-입금요청메일-min](https://github.com/agnes0304/chronos-nextjs/assets/86249667/72faf63f-fbaf-44df-8a84-664912fb4999)
-![입금확인-다운로드메일-min](https://github.com/agnes0304/chronos-nextjs/assets/86249667/381487bb-f509-4a84-81a5-d98cbf6ef0b7)
+(웹과 모바일 동시에 화면 녹화 진행함)
+
+![입금확인메일 발송과정-min사이즈 작은거](https://github.com/agnes0304/chronos-nextjs/assets/86249667/eabbd1d1-a200-4bc3-b3ec-f23a64ba0bcb)
+![다운로드가능메일발송과정-min사이즈 작은거](https://github.com/agnes0304/chronos-nextjs/assets/86249667/00c19c52-b2fb-4523-abab-0b5d0b7f85ce)
+
+- 왼쪽 ) 구매자가 송금 후 ```확인```버튼을 누르면 판매자에게 입금확인 요청 이메일이 전달
+- 오른쪽 ) 판매자가 입금확인요청 리스트에서 ```확인```버튼을 누르면 구매자에게 다운로드 가능 이메일이 전달
+   - 해당 이메일을 통해 바로 다운로드 페이지로 이동
+   - 약관 동의 후 이메일 최초 입력 시 시간이 ```clickedAt```에 기록 
