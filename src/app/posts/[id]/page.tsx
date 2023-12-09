@@ -1,5 +1,5 @@
 import axios from "axios";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Fdate from "@/components/Fdate";
 import Actions from "@/components/post/Actions";
 import type { Metadata } from "next";

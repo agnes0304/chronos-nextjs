@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import fossilLogo from "../../public/fossilLogo.png";
 import GotoPaymentSuccess from "./payment/GotoPaymentSuccess";
@@ -13,6 +13,7 @@ const Header = () => {
               className="opacity-80"
               src={fossilLogo}
               width={20}
+              height={20}
               alt="naver blog profile"
             />
             <p className="text-sm text-gray-400">필기깎는화석</p>
