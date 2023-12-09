@@ -1,7 +1,7 @@
 "use client";
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 
 type TextEditorProps = {
   onChange?: (content: string) => void;
@@ -41,22 +41,20 @@ export default function TextEditor({onChange, defaultValue} : TextEditorProps) {
     'link',
     'align',
     'color',
+    'font',
     'background',
   ];
 
   const modules = {
     toolbar: [
-      [{ header: [1, 2, false] }],
+      [{ header: [1, 2, 3,4, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-      ],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],  
       ['link'],
-      [{ align: [] }, { color: [] }, { background: [] }],
-      ['clean'],
+      [{ 'color': [] }, { 'background': [] }], 
+      [{ 'font': [] }],
+      [{ 'align': [] }],
     ],
   };
 
