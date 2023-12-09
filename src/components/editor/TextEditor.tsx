@@ -59,7 +59,7 @@ export default function TextEditor({onChange, defaultValue} : TextEditorProps) {
   };
 
   return (
-    <div className='h-auto min-h-[200px] max-h-[400px] overflow-auto'>
+    <div className='h-auto min-h-min max-h-[400px] overflow-auto'>
       <ReactQuill
         value={value}
         onChange={handleQuillChange}
