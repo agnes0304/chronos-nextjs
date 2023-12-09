@@ -72,7 +72,7 @@ AWS Simple email service를 사용하여 판매자와 구매자 간의 상호 �
 
 - Supabase Authentication을 활용하여 관리자 페이지의 깃허브 로그인/로그아웃 구현
 - 관리자 페이지 내 포스트 생성 및 수정
-   - <a href="">데모 영상 바로보기</a>
+   - <a href="https://github.com/agnes0304/chronos-nextjs?tab=readme-ov-file#%EA%B4%80%EB%A6%AC%EC%9E%90-%ED%8E%98%EC%9D%B4%EC%A7%80">데모 영상 바로보기</a>
 - AWS SES를 통해 판매자 ↔ 구매자 간 알림 이메일 전송 자동화
    - <a href="https://velog.io/@inmyhead/AWS-SES으로-유저에게-이메일-전송하기">관련 글 바로가기</a>
    - <a href="">데모 영상 바로보기</a>
