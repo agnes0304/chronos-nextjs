@@ -78,7 +78,7 @@ const Payment = ({
 
       setTimeout(() => {
         router.push("/payment/confirm");
-      }, 10000);
+      }, 8000);
     } catch (error) {
       console.log("There was a problem with the fetch operation:", error);
     }
