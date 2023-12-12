@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Tossbadge() {
   return (
-    <div className="flex justify-center items-center border border-blue-600 rounded-lg pr-1 mx-1">
+    <div className="flex justify-center items-center border border-blue-600 rounded-lg pr-1 mx-1 min-w-max">
       <Image
         src="/toss.png"
         alt="toss"

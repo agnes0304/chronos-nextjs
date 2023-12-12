@@ -144,11 +144,11 @@ const Payment = ({
         </form>
         <div className="flex flex-col gap-1">
           <p className="text-sm font-normal text-gray-500">
-            송금은 <span className="font-medium text-rose-500">모바일</span>에서
+          · 송금은 <span className="font-medium text-rose-500">모바일</span>에서
             진행해주세요!
           </p>
-          <div className="flex">
-            <Kakaobadge />{" "}
+          <div className="flex flex-wrap">
+          <span className="text-sm font-normal text-gray-500">· </span><Kakaobadge />{" "}
             <p className="text-sm font-normal text-gray-500">혹은</p>{" "}
             <Tossbadge />
             <p className="text-sm font-normal text-gray-500">
@@ -161,10 +161,10 @@ const Payment = ({
             ※ 예시: sample@naver.com → &apos;sample&apos;
           </p>
           <p className="text-sm font-normal text-gray-500">
-            버튼 클릭 시 이동하는 주소를 복사해서 사용하실 수 있습니다.
+          · 버튼 클릭 시 이동하는 주소를 복사해서 사용할 수 있습니다.
           </p>
           <p className="text-sm font-normal text-gray-500">
-            송금 후에는 반드시 여기서 확인 버튼을 눌러주세요!
+          · 송금 후에는 꼭 확인 버튼을 눌러주세요!
           </p>
         </div>
         <PayActions isActive={isActive} submitHandler={submitHandler} />
