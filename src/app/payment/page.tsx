@@ -56,30 +56,32 @@ const Payment = ({
     e.preventDefault();
     if (!isActive) return;
 
-    // TODO: 유저 기기가 모바일 크롬 그리고 데스크톱 웹인 경우 클립보드 복사, 붙여넣기를 지원하기. 그렇지 않은 경우는 기존과 동일.
+    // TODO: 유저 기기가 모바일 크롬 그리고 데스크톱 웹인 경우 클립보드 복사, 붙여넣기를 지원하기.
     const copyToClipboardFallback = (url: string) => {
       const textarea = document.createElement("textarea");
       textarea.textContent = url;
       document.body.appendChild(textarea);
       textarea.focus();
       textarea.select();
-  
+
       try {
         const successful = document.execCommand("copy");
         if (successful) {
-          alert(`링크가 복사되었습니다. 모바일에서 새 탭으로 열어주세요! ${url}`);
+          alert(
+            `링크가 복사되었습니다. 모바일에서 새 탭으로 열어주세요! ${url}`
+          );
         } else {
           console.error("Copy command was unsuccessful");
         }
       } catch (err) {
         console.error("Fallback copy method failed", err);
       }
-  
+
       document.body.removeChild(textarea);
     };
-  
+
     const copyToClipboard = async () => {
-      const kakaoUrl = process.env.NEXT_PUBLIC_KAKAO_URL || '/';
+      const kakaoUrl = process.env.NEXT_PUBLIC_KAKAO_URL || "/";
       try {
         if (navigator.clipboard) {
           await navigator.clipboard.writeText(kakaoUrl);
@@ -93,10 +95,15 @@ const Payment = ({
       }
     };
 
-
     const userAgent = window.navigator.userAgent.toLowerCase();
-    const isMobileChrome = /chrome/i.test(userAgent) && /mobile/i.test(userAgent);
-    const isDesktop = !/mobile/i.test(userAgent);
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        userAgent
+      );
+    const isMobileChrome =
+      userAgent.includes("crios") ||
+      (userAgent.includes("chrome") && /android/i.test(userAgent));
+    const isDesktop = !isMobile;
 
     if (isMobileChrome || isDesktop) {
       copyToClipboard();
