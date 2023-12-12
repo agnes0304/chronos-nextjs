@@ -5,8 +5,8 @@ type PayActionsProps = {
 
 const PayActions = ({ isActive, submitHandler }: PayActionsProps) => {
   // '/'말고 error page로 보내야함.
-  const kakaoUrl = process.env.NEXT_PUBLIC_KAKAO_URL_SCHEME || '/';
-  // const kakaoUrl = process.env.NEXT_PUBLIC_KAKAO_URL || '/';
+  // const kakaoUrl = process.env.NEXT_PUBLIC_KAKAO_URL_SCHEME || '/';
+  const kakaoUrl = process.env.NEXT_PUBLIC_KAKAO_URL || '/';
   const tossUrl = process.env.NEXT_PUBLIC_TOSS_URL || '/';
 
   return (
