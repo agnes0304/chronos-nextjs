@@ -76,7 +76,9 @@ const Payment = ({
         throw new Error("Network response was not ok");
       }
 
-      router.push("/payment/confirm");
+      setTimeout(() => {
+        router.push("/payment/confirm");
+      }, 10000);
     } catch (error) {
       console.log("There was a problem with the fetch operation:", error);
     }
