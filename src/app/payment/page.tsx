@@ -56,8 +56,55 @@ const Payment = ({
     e.preventDefault();
     if (!isActive) return;
 
-    window.open(url, "_blank");
+    // TODO: 유저 기기가 모바일 크롬 그리고 데스크톱 웹인 경우 클립보드 복사, 붙여넣기를 지원하기. 그렇지 않은 경우는 기존과 동일.
+    const copyToClipboardFallback = (url: string) => {
+      const textarea = document.createElement("textarea");
+      textarea.textContent = url;
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+  
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          alert(`링크가 복사되었습니다. 모바일에서 새 탭으로 열어주세요! ${url}`);
+        } else {
+          console.error("Copy command was unsuccessful");
+        }
+      } catch (err) {
+        console.error("Fallback copy method failed", err);
+      }
+  
+      document.body.removeChild(textarea);
+    };
+  
+    const copyToClipboard = async () => {
+      const kakaoUrl = process.env.NEXT_PUBLIC_KAKAO_URL || '/';
+      try {
+        if (navigator.clipboard) {
+          await navigator.clipboard.writeText(kakaoUrl);
+          alert("링크가 복사되었습니다. 모바일 새 탭에서 열어주세요!");
+        } else {
+          copyToClipboardFallback(kakaoUrl);
+        }
+      } catch (err) {
+        console.error("링크 복사에 실패했습니다.", err);
+        copyToClipboardFallback(kakaoUrl);
+      }
+    };
 
+
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const isMobileChrome = /chrome/i.test(userAgent) && /mobile/i.test(userAgent);
+    const isDesktop = !/mobile/i.test(userAgent);
+
+    if (isMobileChrome || isDesktop) {
+      copyToClipboard();
+    } else {
+      window.open(url, "_blank");
+    }
+
+    // 주문자 정보 서버로 전송
     try {
       const body = {
         product: productName,
@@ -144,27 +191,28 @@ const Payment = ({
         </form>
         <div className="flex flex-col gap-1">
           <p className="text-sm font-normal text-gray-500">
-          · 송금은 <span className="font-medium text-rose-500">모바일</span>에서
-            진행해주세요!
+            · 송금은 <span className="font-medium text-rose-500">모바일</span>
+            에서 진행해주세요!
           </p>
           <div className="flex flex-wrap">
-          <span className="text-sm font-normal text-gray-500">· </span><Kakaobadge />{" "}
+            <span className="text-sm font-normal text-gray-500">· </span>
+            <Kakaobadge />{" "}
             <p className="text-sm font-normal text-gray-500">혹은</p>{" "}
             <Tossbadge />
             <p className="text-sm font-normal text-gray-500">
               에는 꼭{" "}
-              <span className="font-medium text-rose-500">@제외 주소</span>
-              를 적어주세요!
+              <span className="font-medium text-rose-500">@제외 주소</span>를
+              적어주세요!
             </p>
           </div>
           <p className="text-sm font-normal text-gray-500">
             ※ 예시: sample@naver.com → &apos;sample&apos;
           </p>
           <p className="text-sm font-normal text-gray-500">
-          · 버튼 클릭 시 이동하는 주소를 복사해서 사용할 수 있습니다.
+            · 버튼 클릭 시 이동하는 주소를 복사해서 사용할 수 있습니다.
           </p>
           <p className="text-sm font-normal text-gray-500">
-          · 송금 후에는 꼭 확인 버튼을 눌러주세요!
+            · 송금 후에는 꼭 확인 버튼을 눌러주세요!
           </p>
         </div>
         <PayActions isActive={isActive} submitHandler={submitHandler} />
